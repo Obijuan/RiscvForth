@@ -237,25 +237,6 @@ docon2:
 	addi s0,s0,4
 	ret
 
-#---------------------------------------------------
-#-- DOCON, code action of LITERAL
-#---------------------------------------------------
-#-- Direccion ??
-.global dolit
-dolit:
-	#-- Leer la constante en t0
-	lw t0, 0(ra)
-
-	#-- Meterla en la pila
-	addi sp,sp,-4
-	sw t0, 0(sp)
-
-    #-- Incrementar ra en 4 para saltar la constante
-    addi ra,ra,4
-
-	#---- NEXT
-	ret
-
 #-------------------------------------------------
 #-- ?branch2   x --           branch if TOS zero
 #-------------------------------------------------

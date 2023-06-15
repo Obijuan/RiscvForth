@@ -415,7 +415,7 @@ link37:
 #-- Palabra 38
  .align 2
     .word link37
-    .byte 0
+    .byte 1 #-- IMMED
 link38:
     .byte 1
     .ascii "["
@@ -424,7 +424,7 @@ link38:
 #-- Palabra 39
  .align 2
     .word link38
-    .byte 0
+    .byte 1 #-- IMMED
 lastword:
 link39:
     .byte 1

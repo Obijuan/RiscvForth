@@ -2461,8 +2461,8 @@ do_literal:
     #-- Modo de compilacion
     #-- Pila:  n --
 
-    #-- Añadir Llamada a dolit
-    la t0,dolit
+    #-- Añadir Llamada a do_lit
+    la t0,do_lit
     PUSH_T0
     CJAL
 

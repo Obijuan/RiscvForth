@@ -38,24 +38,71 @@ do_exit:
 
 #-----------------------------------------------------
 #-- Meter un literal en la pila
-#-- El literal se encuentra en la posicion siguiente del
-#-- Thread de Forth
+#-- El literal se encuentra en la posicion siguiente de
+#-- la instrucción Forth
 #-- Palabra PRIVADA
 #------------------------------------------------------
 .global do_lit
 do_lit:
+	#-- Leer la constante en t0
+	#-- La direccion de la literal está en ra
+	lw t0, 0(ra)
+
+	#-- Meter literal en la pila
+	PUSH_T0
+
+    #-- Incrementar ra en 4 para saltar la constante
+    addi ra,ra,4
+
+	#-- Siguiente instrucción forth
+	NEXT
+
+#-----------------------------------------------------
+#-- Es igual a do_lit, pero la version hackeada
+#-- Es la que se usa al definir programas Forth desde
+#-- el ensamblador. Para meter una literal en la pila
+#-- usamos la macro LIT que llama a esta funcion
+#--
+#-- HACK:
+#--   En el Rars no se pueden meter datos dentro del 
+#--  segmento de codigo (en tiempo de compilación).
+#--  Si metemos por ejemplo .word 3, como estamos en el seg.
+#-   de codigo el RARS dara un error
+#--  Para solucionarlo,  en vez de la constante metemos
+#-- la instruccion lui, que tiene la constante de 20-bits
+#-- en sus bits de mayor peso
+#-- En este hack leemos primero la instrucción lui y
+#-- obtenemos la constante displazando 12-bits a la 
+#-- derecha esta instrucción (extracción de los 20 bits de
+#-- mayor peso)
+#--
+#-- LIMITACION:
+#--   -Solo vale para meter constantes de hasta 20-bits
+#--
+#-- Para la versión de GNU AS no hará falta este hack
+#-- Tampoco si usamos una implementación DTC (Direct thread code)
+#------------------------------------------------------
+.global do_lit_hack
+do_lit_hack:
  
-	#-- Leer el literal y meterlo en t0
-    READLIT_T0
+	#-- Leer la constante en t0
+	#-- La direccion de la literal está en ra
+	lw t0, 0(ra)
+
+	#-- HACK: En realidad no es el literal exacto, esta
+	#--  dentro de la instruccion lui (en los 20-bits de mayor peso)
+	#-- Desplazar t0 >> 12  (12 bits a la derecha)
+	srai t0,t0,12
+
+	#-- En t0 tenemos el literal
+    #-- Lo metemos en la pila
+    PUSH_T0
 
     #-- Incrementar ra en 4 para que se ejecute la instruccion
     #-- tras el literal 
     addi ra,ra,4
     
-    #-- En t0 tenemos el literal
-    #-- Lo metemos en la pila
-    PUSH_T0
-    ret
+    NEXT
 
 
 
@@ -795,14 +842,7 @@ do_dothex:
 	PRINT_CHAR_T0
 
 	ret
-	
 
-
-#-- old version
-# do_lit:
-# 	mv t0,a0
-# 	PUSH_T0
-# 	ret
 	
 #-----------------------------------------------------
 #-- Emit: Imprimir el caracter que está en la pila

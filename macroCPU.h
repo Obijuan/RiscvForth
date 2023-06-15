@@ -122,12 +122,12 @@
 
 	#-- Literal sin argumentos
 	.macro LIT
-	  jal do_lit
+	  jal do_lit_hack
 	.end_macro
 
 	#-- Literal con argumentos
 	.macro LIT (%val)
-	   jal do_lit
+	   jal do_lit_hack
 	   DW(%val)
 	.end_macro
 
