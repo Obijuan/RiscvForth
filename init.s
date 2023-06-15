@@ -99,6 +99,8 @@ ptib:  #-- Puntero
 
 #--- NOTA: Reservar espacio para el usuario!!!
     .space 1024
+    .space 1024
+    .space 1024
 
 #--------------------------------
 #-- Valores iniciales para el area de usuario
@@ -493,24 +495,3 @@ start:
 
     #-- Inicializar el puntero a la zona de usuario (UP)
     la s2, user_area
-
-    #-- Inicializacion del sistema
-    #-- (COLD)
-    #-- COLD llama a quit, pero de momento lo hacemos manualmente
-    COLD
-
-    #-- Arrancar el modo interactivo (intérprete)
-    #QUIT  #-- Nunca retorna de aquí
-
-    #-- Modo ejecución directa (No interactivo)
-    #-- Programa Forth: QUIT
-
-    #-- Fin ejecución direct
-    XSQUOTE(4," ok\n")
-    TYPE
-
-    QUIT
-
-	#-- Terminar
-	BYE
-

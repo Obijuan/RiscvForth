@@ -2788,7 +2788,7 @@ do_cold:
     #-- COUNT
     #-- INTERPRET
 
-    XSQUOTE(37, "RISCV CamelForth v1.01  14 Jun 2023\n\r")
+    XSQUOTE(30, "RiscvForth v0.1  15 Jun 2023\n\r")
     TYPE
     #-- ABORT  (TODO)
 
