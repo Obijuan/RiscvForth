@@ -17,12 +17,16 @@
 #----------------------------------------------------------
 
 #-- Primera palabra
+#-- https://forth-standard.org/standard/core/EXIT
       .word 0 
       .byte 0
 link0:          #-- Enlace a esta palabra
       .byte 4   #-- Longitud del nombre
       .ascii "EXIT" #-- Nombre
-      .word do_exit
+      .word do_exit 
+
+
+
 
 
 #-- Palabra 1

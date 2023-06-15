@@ -22,18 +22,11 @@
 # ================ Palabras PRIMITIVAS ===================
 
 #---------------------------------------------------
-# BYE     i*x --    Terminar. Devolver control al 
-#                   sistema operativo
-#---------------------------------------------------
-.global do_bye
-do_bye:
-	OS_EXIT
-
-#---------------------------------------------------
 # EXIT    ---    R:  x ---
 # Sacar de la pila R la direccion de retorno
 # y saltar a ella. Esto devuelve el control a la palabra
 # superior
+# https://forth-standard.org/standard/core/EXIT
 #----------------------------------------------------
 .global do_exit
 do_exit:
@@ -42,6 +35,17 @@ do_exit:
 
 	#-- Devolver control
 	NEXT	
+
+#---------------------------------------------------
+# BYE     i*x --    Terminar. Devolver control al 
+#                   sistema operativo
+# https://forth-standard.org/standard/tools/BYE
+#---------------------------------------------------
+.global do_bye
+do_bye:
+	OS_EXIT
+
+
 
 
 
