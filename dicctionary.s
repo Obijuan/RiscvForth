@@ -3,18 +3,29 @@
 #-------------------------
 #-- Diccionario
 #-------------------------
+#-- ESTRUCTURA:
+#--
+#-- LINK   : 1 celda. Direccion a la siguiente palabra
+#--          (la última tiene un valor 0)
+#-- INMED  : Es una palabra inmediata (0=normal, 1=inmediata)
+#-- NAME   : Campo nombre.Compuesto por:
+#--   LEN  : 1 byte. Longitud del nombre de la palabra
+#--   Chars: n bytes. Los caracteres del nombre de la palabra
+#-- CODE   : Direccion al codigo de esa palabra
+#--          En el rars no se puede poner en el segmento de datos
+#--          un jal, por eso ponemos solo la direccion
+#----------------------------------------------------------
 
-#-- Palabra 0
-      .word 0   #-- (link) Enlace a la siguiente palabra. Esta es la última
-      .byte 0   #-- No inmediato
+#-- Primera palabra
+      .word 0 
+      .byte 0
 link0:          #-- Enlace a esta palabra
-      .byte 4   #-- Longitud
+      .byte 4   #-- Longitud del nombre
       .ascii "EXIT" #-- Nombre
-      .word -1  #-- jal exit #-- Codigo Forth
+      .word do_exit
 
 
 #-- Palabra 1
-    .align 2
     .word link0
     .byte 0
 link1:

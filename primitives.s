@@ -18,6 +18,34 @@
 	
 	.text
 
+
+# ================ Palabras PRIMITIVAS ===================
+
+#---------------------------------------------------
+# BYE     i*x --    Terminar. Devolver control al 
+#                   sistema operativo
+#---------------------------------------------------
+.global do_bye
+do_bye:
+	OS_EXIT
+
+#---------------------------------------------------
+# EXIT    ---    R:  x ---
+# Sacar de la pila R la direccion de retorno
+# y saltar a ella. Esto devuelve el control a la palabra
+# superior
+#----------------------------------------------------
+.global do_exit
+do_exit:
+	#-- Recuperar la direccion de retorno de la pila r
+	POP_RA
+
+	#-- Devolver control
+	NEXT	
+
+
+
+
 #---------------------------------------------------
 #-- DOCON, code action of CONSTANT
 #---------------------------------------------------
@@ -1188,12 +1216,7 @@ do_unloop:
     
 	NEXT
 
-#---------------------------------------------------
-# BYE     i*x --    return to OS
-#---------------------------------------------------
-.global do_bye
-do_bye:
-	OS_EXIT
+
 
 #---------------------------------------------------
 # EXECUTE   i*x xt -- j*x   execute Forth word

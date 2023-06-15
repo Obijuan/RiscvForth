@@ -528,3 +528,7 @@ myStr: .byte %len,
 .macro PLUSLOOP
   jal do_plusloop
 .end_macro
+
+.macro DOTLWCLEN
+  jal do_dotlwclen
+.end_macro

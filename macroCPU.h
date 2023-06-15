@@ -84,7 +84,7 @@
 		PUSH_RA
 	.end_macro
 
-    	#-----------------------------------
+    #-----------------------------------
 	#-- DE ACCESO AL SISTEMA OPERATIVO
 	#-----------------------------------
 	#-- Terminar el programa

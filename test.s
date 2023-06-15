@@ -422,8 +422,38 @@ do_dotlwinfo:
     LIT(16)
     DOTWCODE
 
+    EXIT
+
+#---------------------------------------------------------------------
+#-- .LWCLEN        -- x    Tamaño en celdas del codigo de la ultima
+#--                        palabra del diccionario
+#---------------------------------------------------------------------
+.global do_dotlwclen
+do_dotlwclen:
+    DOCOLON
+
+    #-- El tamaño se calcula mediante la resta de la direccion
+    #-- de la palabra y la ultima posicion disponible (HERE)
+
+    #-- Obtener direccion de comienzo del codigo
+    LATEST
+    FETCH
+    NFATOCFA
+    FETCH
+
+    #-- Obtener direccion de la primer celda libre
+    HERE
+
+    #-- Restar
+    SWOP
+    MINUS
+
+    #-- El resultado se devuelve en celdas (no en bytes)
+    TWOSLASH
+    TWOSLASH
 
     EXIT
+
 
 
 #---------------------------------------------------------
@@ -665,4 +695,10 @@ do_home:
 
     EXIT
 
+
+
+
+#-----------------------------------------------------
+#-- .LWINFO  --  Mostrar informacion de la ca
+#-----------------------------------------------------
     
