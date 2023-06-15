@@ -389,11 +389,47 @@ link34:
  .align 2
     .word link34
     .byte 0
-lastword:
 link35:
     .byte 4
     .ascii "QUIT"
     .word do_quit
+
+#-- Palabra 36
+ .align 2
+    .word link35
+    .byte 0
+link36:
+    .byte 1
+    .ascii ","
+    .word do_comma
+
+#-- Palabra 37
+ .align 2
+    .word link36
+    .byte 0
+link37:
+    .byte 1
+    .ascii ","
+    .word do_comma
+
+#-- Palabra 38
+ .align 2
+    .word link37
+    .byte 0
+link38:
+    .byte 1
+    .ascii "["
+    .word do_leftbracket
+
+#-- Palabra 39
+ .align 2
+    .word link38
+    .byte 0
+lastword:
+link39:
+    .byte 1
+    .ascii "]"
+    .word do_rightbracket
     
 
 

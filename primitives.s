@@ -3,7 +3,7 @@
 #----------------------------------------------------------------			
 	
 		
-	.globl do_1, do_plus, do_minus, do_and, do_lit, do_emit	
+	.globl do_1, do_plus, do_minus, do_and, do_emit	
 	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_dup
@@ -35,6 +35,30 @@ do_exit:
 
 	#-- Devolver control
 	NEXT	
+
+#-----------------------------------------------------
+#-- Meter un literal en la pila
+#-- El literal se encuentra en la posicion siguiente del
+#-- Thread de Forth
+#-- Palabra PRIVADA
+#------------------------------------------------------
+.global do_lit
+do_lit:
+ 
+	#-- Leer el literal y meterlo en t0
+    READLIT_T0
+
+    #-- Incrementar ra en 4 para que se ejecute la instruccion
+    #-- tras el literal 
+    addi ra,ra,4
+    
+    #-- En t0 tenemos el literal
+    #-- Lo metemos en la pila
+    PUSH_T0
+    ret
+
+
+
 
 #---------------------------------------------------
 # BYE     i*x --    Terminar. Devolver control al 
@@ -772,23 +796,7 @@ do_dothex:
 
 	ret
 	
-#-----------------------------------
-#-- Meter un literal en la pila
-#-- El literal se encuentra en la posicion siguiente del
-#-- Thread de Forth
-#-----------------------------------
-do_lit:
 
-    READLIT_T0
-
-    #-- Incrementar ra en 4 para que se ejecute la instruccion
-    #-- tras el literal (y no el lui)
-    addi ra,ra,4
-    
-    #-- En t0 tenemos el literal
-    #-- Lo metemos en la pila
-    PUSH_T0
-    ret
 
 #-- old version
 # do_lit:

@@ -134,7 +134,7 @@ do_uinit: #--- CODIGO!!!!
 uinit_params:
     .word 0,0,10,0  # reserved, >IN, BASE, STATE
     .word enddict   # DP
-    .word 0,0       # SOURCE init'd elsewhere
+    .word 10,ptib       # SOURCE init'd elsewhere
     .word lastword   # LATEST
     .word 0         # HP init'd elsewhere
 
