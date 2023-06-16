@@ -163,6 +163,16 @@ myStr: .byte %len,
 	jal do_qnumber
 .end_macro
 
+#-- Modo compilacion: Añadir una literal
+.macro COMMALIT (%lit)
+	#-- Añadir llamada a la palabra lit
+    COMMAXT(do_lit)
+
+    #-- Añadir el literal
+    LIT(%lit)   #-- Lo metemos en la pila
+    COMMA      #-- Lo añadimos
+.end_macro
+
 .macro LITERAL
 	jal do_literal
 .end_macro

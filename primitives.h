@@ -1,10 +1,31 @@
-#---------------------------------------------
+#════════════════════════════════════════════════════════════════
 #-- Macros para las palabras primitivas
-#---------------------------------------------
+#-- Se usan en los programas Forth creados en ensamblador
+#-- No se usan en el interprete, ni para compilar palabras
+#───────────────────────────────────────────────────────────────
+#-- Para ejemplos de uso ver los programas de test en ensamblador
+#════════════════════════════════════════════════════════════════
+
+#-- EXIT: Macro del interprete interno (No en este fichero)
+
+#-- LIT: Llamar a la palabra 'lit'
+#-- La literal se almacena tras el jal
+.macro LIT (%val)
+	jal do_lit_hack
+	DW(%val)
+.end_macro
 
 .macro BYE
     jal do_bye
 .end_macro
+
+.macro EXECUTE
+	jal do_execute
+.end_macro
+
+
+
+
 
 .macro DUP
     jal do_dup

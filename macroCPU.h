@@ -72,10 +72,6 @@
 	  NEXT	
 	.end_macro
 
-	.macro EXECUTE
-	  jal do_execute
-	.end_macro
-
 	# ENTER, a.k.a. DOCOLON, entered by CALL ENTER
 	# to enter a new high-level thread (colon def'n.)
 	# (internal code fragment, not a Forth word)
@@ -118,17 +114,6 @@
     	#--- Para meter literales directamente en el codigo
 	.macro DW(%val)
 	  lui zero,%val
-	.end_macro
-
-	#-- Literal sin argumentos
-	.macro LIT
-	  jal do_lit_hack
-	.end_macro
-
-	#-- Literal con argumentos
-	.macro LIT (%val)
-	   jal do_lit_hack
-	   DW(%val)
 	.end_macro
 
 	#--- Leer literal en t0

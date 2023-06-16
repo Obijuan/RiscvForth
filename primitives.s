@@ -1,8 +1,9 @@
-#----------------------------------------------------------------
-#-- Implementacion de las palabras primitivas
-#----------------------------------------------------------------			
+#════════════════════════════════════════════════════════════════
+#       Implementacion de las palabras primitivas
+#════════════════════════════════════════════════════════════════
 	
 		
+	#-- TODO: Eliminar
 	.globl do_1, do_plus, do_minus, do_and,
 	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
@@ -11,7 +12,7 @@
 	.globl do_cstore, do_spfetch, do_spstore, do_rfetch, do_rpfetch
 	.globl do_rpstore, do_tor, do_rfrom, do_plusstore, do_branch
 	.globl do_qbranch, do_xdo, do_xloop, do_xplusloop, do_ii, do_jj
-	.globl do_unloop, do_execute, do_savekey, do_fourstar
+	.globl do_unloop, do_savekey, do_fourstar
 	.globl douser, do_fill, do_umstar
 					
 	.include "macroCPU.h"
@@ -19,15 +20,15 @@
 	.text
 
 
-# ================ Palabras PRIMITIVAS ===================
+# ══════════════════════ Palabras PRIMITIVAS ══════════════════════
 
-#---------------------------------------------------
-# EXIT    ---    R:  x ---
-# Sacar de la pila R la direccion de retorno
-# y saltar a ella. Esto devuelve el control a la palabra
-# superior
-# https://forth-standard.org/standard/core/EXIT
-#----------------------------------------------------
+#────────────────────────────────────────────────────────────────
+#  EXIT    ---    R:  x ---
+#  Sacar de la pila R la direccion de retorno
+#  y saltar a ella. Esto devuelve el control a la palabra
+#  superior
+#  https://forth-standard.org/standard/core/EXIT
+#────────────────────────────────────────────────────────────────
 .global do_exit
 do_exit:
 	#-- Recuperar la direccion de retorno de la pila r
@@ -36,12 +37,12 @@ do_exit:
 	#-- Devolver control
 	NEXT	
 
-#-----------------------------------------------------
+#────────────────────────────────────────────────────────────────
 #-- Meter un literal en la pila
 #-- El literal se encuentra en la posicion siguiente de
 #-- la instrucción Forth
 #-- Palabra PRIVADA
-#------------------------------------------------------
+#────────────────────────────────────────────────────────────────
 .global do_lit
 do_lit:
 	#-- Leer la constante en t0
@@ -57,7 +58,7 @@ do_lit:
 	#-- Siguiente instrucción forth
 	NEXT
 
-#-----------------------------------------------------
+#────────────────────────────────────────────────────────────────
 #-- Es igual a do_lit, pero la version hackeada
 #-- Es la que se usa al definir programas Forth desde
 #-- el ensamblador. Para meter una literal en la pila
@@ -81,7 +82,7 @@ do_lit:
 #--
 #-- Para la versión de GNU AS no hará falta este hack
 #-- Tampoco si usamos una implementación DTC (Direct thread code)
-#------------------------------------------------------
+#────────────────────────────────────────────────────────────────
 .global do_lit_hack
 do_lit_hack:
  
@@ -104,17 +105,43 @@ do_lit_hack:
     
     NEXT
 
-
-
-
-#---------------------------------------------------
+#────────────────────────────────────────────────────────────────
 # BYE     i*x --    Terminar. Devolver control al 
 #                   sistema operativo
 # https://forth-standard.org/standard/tools/BYE
-#---------------------------------------------------
+#────────────────────────────────────────────────────────────────
 .global do_bye
 do_bye:
 	OS_EXIT
+
+#────────────────────────────────────────────────────────────────
+# EXECUTE   i*x xt -- j*x   execute Forth word
+# La direccion recibida es donde se encuentra el código 
+# máquina de la palabra
+# (NO es el campo CFA)
+# El campo CFA en esta implementación contiene la dirección del
+# código
+# Por ejemplo, para ejectar el codigo de la ultima palabra
+# obtenemos el campo CFA y leermos la direccion de ahí:
+# LATEST @ NFATOCFA @ EXECUTE
+#────────────────────────────────────────────────────────────────
+.global do_execute
+do_execute:
+
+	#-- xt: Direccion donde está el código máquina
+	#-- de la palabra forth a ejecutar
+	
+	#-- Obtener la direccion de la pila (xt)
+	#-- t0 = xt
+	POP_T0
+
+	#-- Ejecutar la palabra
+	#-- En ra está la dirección del campo de parametros
+	#-- Solo lo usan las variables y constantes para recuperar
+	#-- el valor
+	jalr  zero, t0, 0
+
+
 
 
 
@@ -1361,32 +1388,6 @@ do_unloop:
 	POPR_T0
     
 	NEXT
-
-
-
-#---------------------------------------------------
-# EXECUTE   i*x xt -- j*x   execute Forth word
-# La direccio recibida es la del campo CFA... PERO...
-# en esta implementacion en ese campo NO HAY CODIGO
-# sino que esta la DIRECCION DEL CODIGO
-# Hay que leer lo que hay en esa direccion y luego
-# saltar
-#---------------------------------------------------
-do_execute:
-
-	#-- xt: Direccion donde está la palabra forth
-	#-- a ejecutar
-	
-	#-- Obtener la direccion de la pila (xt)
-	#-- t0 = xt
-	POP_T0
-
-	#-- Ejecutar la palabra
-	#-- En ra está la dirección del campo de parametros
-	#-- Solo lo usan las variables y constantes para recuperar
-	#-- el valor
-	jalr  zero, t0, 0
-
 
 #---------------------------------------------------
 # EXECUTE   SAVEKEY  -- addr  temporary storage for KEY?

@@ -25,10 +25,6 @@ link0:          #-- Enlace a esta palabra
       .ascii "EXIT" #-- Nombre
       .word do_exit 
 
-
-
-
-
 #-- Palabra 1
     .word link0
     .byte 0
@@ -37,9 +33,8 @@ link1:
     .ascii "lit"
     .word do_lit  #-- Direccion al codigo
 
-
 #-- Palabra 2
-    .align 2
+#-- https://forth-standard.org/standard/tools/BYE
     .word link1
     .byte 0
 link2:
@@ -47,15 +42,16 @@ link2:
     .ascii "BYE"
     .word do_bye
 
-
 #-- Palabra 3
-    .align 2
+#-- https://forth-standard.org/standard/core/EXECUTE
     .word link2
     .byte 0
 link3:
-    .byte 1
-    .ascii "+"
-    .word do_plus
+    .byte 7
+    .ascii "EXECUTE"
+    .word do_execute
+
+
 
 
 #-- Palabra 4
@@ -199,7 +195,7 @@ do_l1:
     .byte 0
 link14:
     .byte 7
-    .ascii ".WLINFO"
+    .ascii ".LWINFO"
     .word do_dotlwinfo
 
 #-- Palabra 15
@@ -443,11 +439,20 @@ link40:
  .align 2
     .word link40
     .byte 0
-lastword:
 link41:
     .byte 3
     .ascii "ROT"
     .word do_rot
+
+#-- Palabra 42
+    .align 2
+    .word link41
+    .byte 0
+lastword:
+link42:
+    .byte 1
+    .ascii "+"
+    .word do_plus
     
 
 
