@@ -425,11 +425,29 @@ link38:
  .align 2
     .word link38
     .byte 1 #-- IMMED
-lastword:
 link39:
     .byte 1
     .ascii "]"
     .word do_rightbracket
+
+#-- Palabra 40
+ .align 2
+    .word link39
+    .byte 0
+link40:
+    .byte 5
+    .ascii "XEMIT"
+    .word do_xemit
+
+#-- Palabra 41
+ .align 2
+    .word link40
+    .byte 0
+lastword:
+link41:
+    .byte 3
+    .ascii "ROT"
+    .word do_rot
     
 
 

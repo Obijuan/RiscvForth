@@ -197,6 +197,23 @@ rstack:
 unicode:
     .space 4
 
+#------------------------------
+#-- Offset a la zona unicode: Indica
+#-- la posicion donde situar siguiente byte unicode
+#------------------------------
+.global unicode_offset
+unicode_offset:
+    .byte 0
+
+#----------------------------------
+#-- Estado de la conversion a unicode
+#-- 0: Modo ascii
+#-- 1: Modo unicode
+#-------------------------------------
+.global unicode_state
+unicode_state:
+    .byte 0     
+
 #---------------------------------------------------------------
 #-- CODIGO
 #---------------------------------------------------------------
