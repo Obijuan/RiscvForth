@@ -17,6 +17,7 @@
 #----------------------------------------------------------
 
 #-- Primera palabra
+#-- Palabra 0
 #-- https://forth-standard.org/standard/core/EXIT
       .word 0 
       .byte 0
