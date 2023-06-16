@@ -207,6 +207,10 @@
     jal do_emit 
 .end_macro
 
+.macro XEMIT
+    jal do_xemit 
+.end_macro
+
 .macro KEY
     jal do_key
 .end_macro

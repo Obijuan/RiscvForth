@@ -3,7 +3,7 @@
 #----------------------------------------------------------------			
 	
 		
-	.globl do_1, do_plus, do_minus, do_and, do_emit	
+	.globl do_1, do_plus, do_minus, do_and,
 	.globl do_key, do_store, do_or, do_xor, do_invert, do_negate, do_oneplus
 	.globl do_oneminus, do_twostar, do_twoslash, do_lshift, do_rshift
 	.globl do_zeroequal, do_zeroless, do_equal, do_less, do_dup
@@ -847,6 +847,7 @@ do_dothex:
 #-----------------------------------------------------
 #-- Emit: Imprimir el caracter que está en la pila
 #-----------------------------------------------------
+.global do_emit
 do_emit:
 
 	#-- Leer el caracter de la pila
@@ -855,7 +856,41 @@ do_emit:
 	#-- Imprimir
 	PRINT_CHAR_T0
 
-	ret
+	NEXT
+
+#-----------------------------------------------------
+#-- XEmit:  0 n1 n2 --      Imprimir caracter unicode
+#-- NOTA: El primero SIEMPRE debe ser un 0
+#-----------------------------------------------------
+.global do_xemit
+do_xemit:
+
+
+	#-- Puntero a la zona de unicode
+	la t1,unicode
+
+xemit_loop:
+
+	#-- Leer siguiente byte de la pila
+	POP_T0
+
+	#-- Escribirlo en la zona temporal de unicode
+	sb t0, 0(t1)
+	addi t1,t1,1  #-- Apuntar a la sig. posicion
+
+	#-- Si no es 0, continuamos con el siguiente byte
+	bne t0, zero, xemit_loop
+
+	#-- El ultimo caracter guardado es un 0
+	#-- Los bytes a enviar está en la zona unicode
+
+	#-- Imprimimos la cadena, llamando al servicio
+	#-- PRINT_STRING del RARs
+	la a0, unicode
+	li a7, 4
+	ecall
+
+	NEXT
 	
 #-----------------------------------------------
 #-- Lectura de un caracter. Se deja en la pila 
