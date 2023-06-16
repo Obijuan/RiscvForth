@@ -166,6 +166,10 @@ do_var:
 
 
 
+
+
+
+
 #---------------------------------------------------
 #-- DOCON, code action of CONSTANT
 #---------------------------------------------------
@@ -182,13 +186,11 @@ docon:
 	NEXT
 
 #---------------------------------------------------
-#--  DOVAR, code action of VARIABLE, entered by CALL
 #-- DOCREATE, code action of newly created words
 #--    --- a-addr
 #--
 #-- Meter la direccion de la variable en la pila
 #---------------------------------------------------
-.global dovar
 .global docreate
 dovar:
 docreate:

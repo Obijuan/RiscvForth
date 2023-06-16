@@ -96,7 +96,7 @@ link7:
     .word do_words
 
 
-#-- Palabra 8: VARIABLE
+#-- Palabra 8: VARIABLE de prueba, creada directamente en el diccionario
     .align 2
     .word link7
     .byte 0
@@ -104,13 +104,7 @@ link8:
     .byte 1
     .ascii "A"
     .word do_a
-do_a:  
-     .word 0xffc40413  #-- addi s0,s0, -4
-     .word 0x00142023  #-- sw ra, 0(s0)
-     .word 0x004002b7  #-- li t0, 0x00400004
-     .word 0x00428293
-     .word 0x000280e7  #-- jalr ra,t0,0
-     .word 0           #-- PARAMETRO: La variable
+
 
 #-------------------------------------------
 #-- Codigo a ejecutar para leer la variable
@@ -449,11 +443,29 @@ link41:
     .align 2
     .word link41
     .byte 0
-lastword:
 link42:
     .byte 1
     .ascii "+"
     .word do_plus
+
+#-- Palabra 43
+    .align 2
+    .word link42
+    .byte 0
+link43:
+    .byte 1
+    .ascii "@"
+    .word do_fetch
+
+#-- Palabra 44
+    .align 2
+    .word link43
+    .byte 0
+lastword:
+link44:
+    .byte 1
+    .ascii "!"
+    .word do_store
     
 
 

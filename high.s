@@ -2853,3 +2853,12 @@ do_constant:
     STORCON
 
 	EXIT
+
+#-------------------------------------
+#  A   -- addr   Variable de prueba
+#-------------------------------------
+.global do_a
+do_a:
+    DOCOLON
+    VAR
+    EXIT
