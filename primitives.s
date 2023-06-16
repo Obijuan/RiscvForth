@@ -38,7 +38,7 @@ do_exit:
 	NEXT	
 
 #────────────────────────────────────────────────────────────────
-#-- Meter un literal en la pila
+#-- lit   --  x     Meter un literal en la pila
 #-- El literal se encuentra en la posicion siguiente de
 #-- la instrucción Forth
 #-- Palabra PRIVADA
@@ -142,7 +142,25 @@ do_execute:
 	jalr  zero, t0, 0
 
 
+#────────────────────────────────────────────────────────────────
+#-- DOVAR  ---  a-addr     Ejecucion de una variable
+#--
+#-- Meter la direccion de la variable en la pila
+#-- La variable está a continuación de la llamada a do_var
+#────────────────────────────────────────────────────────────────
+.global do_var
+do_var:
 
+    #-- La direccion de la variable esta en ra
+	#-- La matemos en la pila
+	mv t0,ra
+	PUSH_T0
+
+	#-- Saltar la variable: incrementamos ra en 4
+	addi ra,ra,4
+
+	#--- NEXT
+	NEXT
 
 
 

@@ -23,7 +23,20 @@
 	jal do_execute
 .end_macro
 
+#-- VAR:  Ejecucion de una variable
+#-- (La variable NO se crea en el diccionario)
+.macro VAR
+	jal do_var
+	DW(0)
+.end_macro
 
+
+
+
+
+.macro VARIABLE
+  jal do_variable
+.end_macro
 
 
 
@@ -513,9 +526,7 @@
   jal do_swapbytes
 .end_macro
 
-.macro VARIABLE
-  jal do_variable
-.end_macro
+
 
 .macro CONSTANT
   jal do_constant

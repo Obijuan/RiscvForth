@@ -2832,9 +2832,11 @@ do_ugreater:
 do_variable:
 	DOCOLON
 
-	CREATE
-    STORCOLON
-    STORVAR
+    COLON
+    COMMAXT(do_var)
+    LIT(0)
+    COMMA
+    SEMI
 
 	EXIT
 

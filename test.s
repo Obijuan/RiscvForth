@@ -405,31 +405,13 @@ dcode_loop:
 
     EXIT
 
-#---------------------------------------------------------
-#-- .LWINFO    --   Mostrar informacion y codigo de la
-#--    ultima palabra del diccionario
-#---------------------------------------------------------
-.global do_dotlwinfo
-do_dotlwinfo:
-    DOCOLON
-
-    LATEST
-    FETCH
-    DOTWINFO
-
-    LATEST
-    FETCH
-    LIT(16)
-    DOTWCODE
-
-    EXIT
 
 #---------------------------------------------------------------------
-#-- .LWCLEN        -- x    Tamaño en celdas del codigo de la ultima
+#-- LWCLEN        -- x    Tamaño en celdas del codigo de la ultima
 #--                        palabra del diccionario
 #---------------------------------------------------------------------
-.global do_dotlwclen
-do_dotlwclen:
+.global do_lwclen
+do_lwclen:
     DOCOLON
 
     #-- El tamaño se calcula mediante la resta de la direccion
@@ -454,6 +436,25 @@ do_dotlwclen:
 
     EXIT
 
+#---------------------------------------------------------
+#-- .LWINFO    --   Mostrar informacion y codigo de la
+#--    ultima palabra del diccionario
+#---------------------------------------------------------
+.global do_dotlwinfo
+do_dotlwinfo:
+    DOCOLON
+
+    LATEST    #-- Leer la cabecera
+    FETCH     #-- y mostrarla
+    DOTWINFO
+
+    LATEST    #-- Mostrar el codigo
+    FETCH
+    LWCLEN
+    ONEPLUS   #-- Una instruccion mas, que debe ser 0
+    DOTWCODE
+
+    EXIT
 
 
 #---------------------------------------------------------
