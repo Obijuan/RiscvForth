@@ -52,17 +52,16 @@ link3:
     .ascii "EXECUTE"
     .word do_execute
 
-
-
-
 #-- Palabra 4
-    .align 2
+#-- https://forth-standard.org/standard/core/VARIABLE
     .word link3
     .byte 0
 link4:
-    .byte 1
-    .ascii "."
-    .word do_dot
+    .byte 8
+    .ascii "VARIABLE"
+    .word do_variable
+
+
 
 
 
@@ -461,11 +460,20 @@ link43:
     .align 2
     .word link43
     .byte 0
-lastword:
 link44:
     .byte 1
     .ascii "!"
     .word do_store
+
+#-- Palabra 45
+    .align 2
+    .word link44
+    .byte 0
+lastword:
+link45:
+    .byte 1
+    .ascii "."
+    .word do_dot
     
 
 

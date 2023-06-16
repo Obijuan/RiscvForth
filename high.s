@@ -1,10 +1,43 @@
-#---------------------------------------------------
-#-- Implementacion de las palabras de alto nivel 
-#---------------------------------------------------
+#════════════════════════════════════════════════════════════════
+#       Implementacion de las palabras secundarias
+#        (Implementadas con palabras Forth, no en ensamblador)
+#════════════════════════════════════════════════════════════════
 
     .include "macroCPU.h"
     .include "primitives.h"
     .include "high.h"
+
+# ═════════════════════════ DEFINING WORDS ═════════════════════════
+
+#────────────────────────────────────────────────────────────────
+#   VARIABLE   --      Crear una variable Forth
+#                      Se mete en el diccionario
+#   : CREATE 1 CELLS ALLOT ;
+#────────────────────────────────────────────────────────────────
+.global do_variable
+do_variable:
+	DOCOLON
+
+    COLON
+
+    #-- Añadir llamada a do_var
+    COMMAXT(do_var)
+
+    #-- Añadir espacio para la variable
+    LIT(0)
+    COMMA
+
+    SEMI
+
+	EXIT
+
+
+
+
+
+
+
+
 
 # ========= SYSTEM VARIABLES & CONSTANTS ==================
 #-------------------------------------------------------------
@@ -2820,25 +2853,6 @@ do_ugreater:
 
     EXIT
 
-# =============== DEFINING WORDS ================================
-
-#-----------------------------------------------------
-#   VARIABLE   --      define a Forth variable
-#    CREATE 1 CELLS ALLOT ;
-#  Action of RAM variable is identical to CREATE,
-#  so we don't need a DOES> clause to change it.
-#-----------------------------------------------------
-.global do_variable
-do_variable:
-	DOCOLON
-
-    COLON
-    COMMAXT(do_var)
-    LIT(0)
-    COMMA
-    SEMI
-
-	EXIT
 
 #-----------------------------------------------------
 #  CONSTANT   n --      define a Forth constant
