@@ -27,11 +27,11 @@ do_variable:
     LIT(0)
     COMMA
 
-    #-- Caso especial. No llamamos a 
-    #-- SEMI porque el retorno lo hace directamente
-    #-- do_var
+    #-- No añadir insrucciones de retorno
+    #-- La variable es el ultimo elemento
+    SEMI2
 
-	EXIT
+    EXIT
 
 
 
