@@ -10,33 +10,23 @@
     COLD
 
     #-- Programa Forth a probar:
-    #-- : xx lit [ 170 , ]  ;       ( Definir palabra nueva (sin nombre) )
+    #-- : T lit [ 170 , ]  ;     ( Definir palabra nueva T)
+    #-- .LWINFO                  ( (Mostrar informacion de la nueva palabra))
 
     COLON  #--  :
     
     #-- Añadir llamada a la palabra lit
-    COMMAXT(do_lit)
+    COMMAXT(do_lit2)
 
     #-- Añadir el literal
     LIT(170)   #-- Lo metemos en la pila
     COMMA      #-- Lo añadimos
 
-    SEMI #-- ;
+    #-- No añadir instrucciones de ret. El literal es el ultimo elemento
+    SEMI2 #-- ;
 
-    #-- Mostrar informacion de la cabeza de la palabra
-    #-- .WINFO -->  Print word info
-    LATEST
-    FETCH
-    DOTWINFO
-
-    #-- Mostrar el codigo maquina de la palabra
-    #-- .LWCLEN --> Print Latest Word Code Len
-    #-- .WCODE --> Print Word Code
-    LATEST
-    FETCH
-    DOTLWCLEN
-    ONEPLUS     #-- Imprimimos una celda de más (que debe ser 0)
-    DOTWCODE
+    #-- Mostrar informacion de la palabra (Cabecera y código)
+    DOTLWINFO
 
     #-- Fin ejecución directa
     XSQUOTE(4," ok\n")

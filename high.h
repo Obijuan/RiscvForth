@@ -239,6 +239,10 @@ myStr: .byte %len,
 	jal do_semi
 .end_macro
 
+.macro SEMI2
+	jal do_semi2
+.end_macro
+
 .macro CEXIT
 	jal do_cexit
 .end_macro

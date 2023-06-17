@@ -1892,6 +1892,7 @@ do_colon:
 #  ;
 #   REVEAL  ,EXIT
 #   POSTPONE [  ; IMMEDIATE
+#   VERSION PARA USAR EN FORTH ASEMBLER
 #-------------------------------------------------------------
 .global do_semi
 do_semi:
@@ -1899,6 +1900,21 @@ do_semi:
 
     REVEAL
     CEXIT
+    LEFTBRACKET
+
+    EXIT
+
+#-------------------------------------------------------------
+#  ;
+#   REVEAL  ,EXIT
+#   POSTPONE [  ; IMMEDIATE
+#   VERSION PARA USAR EN LA COMPILACION
+#-------------------------------------------------------------
+.global do_semi2
+do_semi2:
+    DOCOLON
+
+    REVEAL
     LEFTBRACKET
 
     EXIT

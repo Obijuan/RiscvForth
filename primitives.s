@@ -45,6 +45,8 @@ do_exit:
 #-- El literal se encuentra en la posicion siguiente de
 #-- la instrucción Forth
 #-- Palabra PRIVADA
+#-- ESTA ES LA VERSION A USAR DESDE PROGRAMAS EN ASM Y
+#-- DECLARACIONES DIRECTAS A MANO EN EL DICCIONARIO
 #────────────────────────────────────────────────────────────────
 .global do_lit
 do_lit:
@@ -59,6 +61,28 @@ do_lit:
     addi ra,ra,4
 
 	#-- Siguiente instrucción forth
+	NEXT
+
+#────────────────────────────────────────────────────────────────
+#-- lit   --  x     Meter un literal en la pila
+#-- El literal se encuentra en la posicion siguiente de
+#-- la instrucción Forth
+#-- Palabra PRIVADA
+#-- ESTA ES LA QUE SE DEBE USAR AL COMPILAR
+#────────────────────────────────────────────────────────────────
+.global do_lit2
+do_lit2:
+	#-- Leer la constante en t0
+	#-- La direccion de la literal está en ra
+	lw t0, 0(ra)
+
+	#-- Meter literal en la pila
+	PUSH_T0
+
+    #-- Retornamos a la direccion que hay en la pila R
+	POP_RA
+
+	#-- Siguiente instruccion
 	NEXT
 
 #────────────────────────────────────────────────────────────────
