@@ -27,7 +27,9 @@ do_variable:
     LIT(0)
     COMMA
 
-    SEMI
+    #-- Caso especial. No llamamos a 
+    #-- SEMI porque el retorno lo hace directamente
+    #-- do_var
 
 	EXIT
 

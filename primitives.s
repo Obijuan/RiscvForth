@@ -16,6 +16,9 @@
 	.globl douser, do_fill, do_umstar
 					
 	.include "macroCPU.h"
+
+	#-- Debug...
+	.include "primitives.h"
 	
 	.text
 
@@ -128,6 +131,9 @@ do_bye:
 .global do_execute
 do_execute:
 
+	#-- DEBUG
+	#PUSH_RA
+
 	#-- xt: Direccion donde está el código máquina
 	#-- de la palabra forth a ejecutar
 	
@@ -147,12 +153,14 @@ do_execute:
 #--
 #-- Meter la direccion de la variable en la pila
 #-- La variable está a continuación de la llamada a do_var
+#-- ESTA ES LA VERSION A USAR DESDE PROGRAMAS EN ASM Y
+#-- DECLARACIONES DIRECTAS A MANO EN EL DICCIONARIO
 #────────────────────────────────────────────────────────────────
 .global do_var
 do_var:
 
     #-- La direccion de la variable esta en ra
-	#-- La matemos en la pila
+	#-- La metemos en la pila: Es la direccion de la variable
 	mv t0,ra
 	PUSH_T0
 
@@ -161,6 +169,28 @@ do_var:
 
 	#--- NEXT
 	NEXT
+
+#────────────────────────────────────────────────────────────────
+#-- DOVAR2  ---  a-addr     Ejecucion de una variable
+#--
+#-- Meter la direccion de la variable en la pila
+#-- La variable está a continuación de la llamada a do_var
+#-- ESTA ES LA QUE SE DEBE USAR AL COMPILAR
+#────────────────────────────────────────────────────────────────
+.global do_var2
+do_var2:
+
+    #-- La direccion de la variable esta en ra
+	#-- La metemos en la pila: Es la direccion de la variable
+	mv t0,ra
+	PUSH_T0
+
+	#-- Retornamos a la direccion que hay en la pila R
+	POP_RA
+
+	#-- Siguiente instruccion
+	NEXT
+
 
 
 
