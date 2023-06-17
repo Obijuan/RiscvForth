@@ -21,7 +21,7 @@ do_variable:
     COLON
 
     #-- Añadir llamada a do_var
-    COMMAXT(do_var)
+    COMMAXT(do_var2)
 
     #-- Añadir espacio para la variable
     LIT(0)

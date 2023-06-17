@@ -444,10 +444,14 @@ do_lwclen:
 do_dotlwinfo:
     DOCOLON
 
+    #-- .WINFO -->  Print word info
     LATEST    #-- Leer la cabecera
     FETCH     #-- y mostrarla
     DOTWINFO
 
+    #-- Mostrar el codigo maquina de la palabra
+    #-- .LWCLEN --> Print Latest Word Code Len
+    #-- .WCODE --> Print Word Code
     LATEST    #-- Mostrar el codigo
     FETCH
     LWCLEN
