@@ -13,6 +13,7 @@
 #   VARIABLE   --      Crear una variable Forth
 #                      Se mete en el diccionario
 #   : CREATE 1 CELLS ALLOT ;
+# https://forth-standard.org/standard/core/VARIABLE
 #────────────────────────────────────────────────────────────────
 .global do_variable
 do_variable:
@@ -36,7 +37,8 @@ do_variable:
 #────────────────────────────────────────────────────────────────
 #  CONSTANT   n --      define a Forth constant
 #   CREATE , DOES> (machine code fragment)
-#────────────────────────────────────────────────────────────────do
+#  https://forth-standard.org/standard/core/CONSTANT
+#────────────────────────────────────────────────────────────────
 .global do_constant
 do_constant:
 	DOCOLON

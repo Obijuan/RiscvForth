@@ -29,8 +29,9 @@ do_tobody:
 #-- CELL     -- n                 size of one cell
 #----------------------------------------------------
 do_cell:
-  DOCON
-  DW(4)
+  DOCOLON
+  CON(4)
+  EXIT
 
 #----------------------------------------------------
 #-- CELL+    a-addr1 -- a-addr2      add cell size
