@@ -33,6 +33,27 @@ do_variable:
 
     EXIT
 
+#────────────────────────────────────────────────────────────────
+#  CONSTANT   n --      define a Forth constant
+#   CREATE , DOES> (machine code fragment)
+#────────────────────────────────────────────────────────────────do
+.global do_constant
+do_constant:
+	DOCOLON
+
+	COLON
+
+    #-- Añadir llamada a do_con
+    COMMAXT(do_con2)
+
+    #-- Añadir espacio para la constante
+    COMMA
+
+    #-- No añadir insrucciones de retorno
+    #-- La variable es el ultimo elemento
+    SEMI2
+
+	EXIT
 
 
 
@@ -2872,19 +2893,6 @@ do_ugreater:
     EXIT
 
 
-#-----------------------------------------------------
-#  CONSTANT   n --      define a Forth constant
-#   CREATE , DOES> (machine code fragment)
-#-----------------------------------------------------
-.global do_constant
-do_constant:
-	DOCOLON
-
-	CREATE
-    STORCOLON
-    STORCON
-
-	EXIT
 
 #-------------------------------------
 #  A   -- addr   Variable de prueba

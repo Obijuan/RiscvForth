@@ -30,13 +30,19 @@
 	DW(0)
 .end_macro
 
-
-
-
-
+#-- Compilar una variable
 .macro VARIABLE
   jal do_variable
 .end_macro
+
+#-- Compilar una constante
+.macro CONSTANT
+  jal do_constant
+.end_macro
+
+
+
+
 
 
 
@@ -528,9 +534,6 @@
 
 
 
-.macro CONSTANT
-  jal do_constant
-.end_macro
 
 
 

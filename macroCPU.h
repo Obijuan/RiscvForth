@@ -133,7 +133,7 @@
 
 	.macro DOCON
 	  PUSH_RA
-	  jal docon
+	  jal do_con
 	.end_macro
 
 	.macro DOVAR

@@ -101,6 +101,7 @@ ptib:  #-- Puntero
     .space 1024
     .space 1024
     .space 1024
+    .space 1024
 
 #--------------------------------
 #-- Valores iniciales para el area de usuario

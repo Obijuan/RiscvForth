@@ -216,28 +216,59 @@ do_var2:
 	NEXT
 
 
+#────────────────────────────────────────────────────────────────
+#-- DOCON  ---  x     Ejecucion de una constante
+#--
+#-- Meter el valor de la consante en la pila
+#-- La constante está a continuación de la llamada a do_con
+#-- ESTA ES LA VERSION A USAR DESDE PROGRAMAS EN ASM Y
+#-- DECLARACIONES DIRECTAS A MANO EN EL DICCIONARIO
+#────────────────────────────────────────────────────────────────
+.global do_con
+do_con:
 
-
-
-
-
-
-
-
-#---------------------------------------------------
-#-- DOCON, code action of CONSTANT
-#---------------------------------------------------
-.global docon
-docon:
 	#-- Leer la constante en t0
 	READLIT_T0
 
 	#-- Meterla en la pila
 	PUSH_T0
 
-	#---- NEXT
+	#-- Retornamos a la direccion que hay en la pila R
 	POP_RA
+
+	#-- Siguiente instruccion
 	NEXT
+
+#────────────────────────────────────────────────────────────────
+#-- DOCON2  ---  x     Ejecucion de una constante
+#--
+#-- Meter el valor de la consante en la pila
+#-- La constante está a continuación de la llamada a do_con
+#-- ESTA ES LA VERSION A USAR DESDE PROGRAMAS EN ASM Y
+#-- DECLARACIONES DIRECTAS A MANO EN EL DICCIONARIO
+#────────────────────────────────────────────────────────────────
+.global do_con2
+do_con2:
+
+	#-- La direccion de la constante esta en ra
+	#-- Leemos el valor de la constante
+	lw t0, 0(ra)
+
+	#-- La metemos en la pila
+	PUSH_T0
+
+	#-- Retornamos a la direccion que hay en la pila R
+	POP_RA
+
+	#-- Siguiente instruccion
+	NEXT
+
+
+
+
+
+
+
 
 #---------------------------------------------------
 #-- DOCREATE, code action of newly created words
