@@ -546,3 +546,32 @@ myStr: .byte %len,
 .macro LWCLEN
   jal do_lwclen
 .end_macro
+
+#-- Variable de 32 celdas
+.macro ACTUAL_RESULTS
+  jal do_actual_results
+.end_macro
+
+.macro START_DEPTH
+	jal do_start_depth
+.end_macro
+
+.macro ACTUAL_DEPTH
+	jal do_actual_depth
+.end_macro
+
+.macro XCURSOR
+	jal do_xcursor
+.end_macro
+
+.macro TLBRAC
+	jal do_tlbrac
+.end_macro
+
+.macro ARROW
+	jal do_arrow
+.end_macro
+
+.macro RBRACT
+	jal do_rbracT
+.end_macro

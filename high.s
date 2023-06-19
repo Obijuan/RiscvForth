@@ -1030,6 +1030,7 @@ do_hex:
 #  DECIMAL  --      set number base to decimal
 #   10 BASE ! ;
 #----------------------------------------------------
+.global do_decimal
 do_decimal:
     DOCOLON
 
@@ -1662,6 +1663,15 @@ do_paren:
     WORD
     DROP
 
+    EXIT
+
+.global do_comment
+do_comment:
+    DOCOLON
+
+    LIT(10)
+    WORD
+    DROP
     EXIT
 
 
@@ -2939,3 +2949,4 @@ do_esc:
     DOCOLON
     CON(27)
     EXIT
+

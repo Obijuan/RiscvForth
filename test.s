@@ -701,9 +701,201 @@ do_home:
     EXIT
 
 
+#----------------------------------------------------
+#-- ACTUAL_RESULTS    (Array de 32 celdas)
+#----------------------------------------------------
+.global do_actual_results
+do_actual_results:
+    DOCOLON
+    jal do_var2
+	DW(0x00)
+    DW(0x01)
+    DW(0x02)
+    DW(0x03)
+    DW(0x04)
+    DW(0x05)
+    DW(0x06)
+    DW(0x07)
+    DW(0x08)
+    DW(0x09)
+    DW(0x0a)
+    DW(0x0b)
+    DW(0x0c)
+    DW(0x0d)
+    DW(0x0e)
+    DW(0x0f)
+    DW(0x10)
+    DW(0x11)
+    DW(0x12)
+    DW(0x13)
+    DW(0x14)
+    DW(0x15)
+    DW(0x16)
+    DW(0x17)
+    DW(0x18)
+    DW(0x19)
+    DW(0x1a)
+    DW(0x1b)
+    DW(0x1c)
+    DW(0x1d)
+    DW(0x1e)
+    DW(0x1f)
+    EXIT
 
 
-#-----------------------------------------------------
-#-- .LWINFO  --  Mostrar informacion de la ca
-#-----------------------------------------------------
-    
+#----------------------------------------------------
+#-- VARIABLE START-DEPTH
+#----------------------------------------------------
+.global do_start_depth
+do_start_depth:
+    DOCOLON
+    VAR
+    EXIT
+
+#----------------------------------------------------
+#-- VARIABLE ACTUAL-DEPTH
+#----------------------------------------------------
+.global do_actual_depth
+do_actual_depth:
+    DOCOLON
+    VAR
+    EXIT
+
+#----------------------------------------------------
+#-- VARIABLE XCURSOR
+#----------------------------------------------------
+.global do_xcursor
+do_xcursor:
+    DOCOLON
+    VAR
+    EXIT
+
+#---------------------------------------------------
+#-- T{     ----
+#--  : T{		\ ( -- ) syntactic sugar.
+#-- DEPTH START-DEPTH ! 0 XCURSOR ! ;
+#---------------------------------------------------
+.global do_tlbrac
+do_tlbrac:
+    DOCOLON
+
+    DEPTH
+    START_DEPTH
+    STORE
+    LIT(0)
+    XCURSOR
+    STORE
+
+    EXIT
+
+#---------------------------------------------------
+#-- ->     ----
+#--  : ->		\ ( ... -- ) record depth and contents of stack.
+#--     DEPTH DUP ACTUAL-DEPTH !		\ record depth
+#--     START-DEPTH @ > IF		\ if there is something on the stack
+#--         DEPTH START-DEPTH @ - 0 DO ACTUAL-RESULTS I CELLS + ! LOOP \ save them
+#--     THEN ;
+#---------------------------------------------------
+.global do_arrow
+do_arrow:
+    DOCOLON
+
+    DEPTH
+    DUP
+    ACTUAL_DEPTH
+    STORE               #-- Guardar la profundidad de la pila
+
+    START_DEPTH
+    FETCH
+    GREATER
+    QBRANCH    #-- IF
+    ADDR(ARROW1)
+
+    #-- Hay algo en la pila
+    DEPTH
+    START_DEPTH
+    FETCH
+    MINUS    #-- Numero de elementos introducidos en la pila
+
+    #-- Guardar todos los elementos en el array ACTUAL_RESULTS
+    LIT(0)
+    XDO
+ARROW2:    
+    ACTUAL_RESULTS
+    II
+    CELLS
+    PLUS
+
+    STORE
+    XLOOP
+    ADDR(ARROW2)
+
+ARROW1:
+
+    EXIT
+
+#--  : }T		\ ( ... -- ) COMPARE STACK (EXPECTED) CONTENTS WITH SAVED
+#--  		\ (ACTUAL) CONTENTS.
+#--     DEPTH ACTUAL-DEPTH @ = IF		\ if depths match
+#--        DEPTH START-DEPTH @ > IF		\ if there is something on the stack
+#--           DEPTH START-DEPTH @ - 0 DO	\ for each stack item
+#--  	    ACTUAL-RESULTS I CELLS + @	\ compare actual with expected
+#--  	    <> IF S" INCORRECT RESULT: " ERROR LEAVE THEN
+#--  	 LOOP
+#--        THEN
+#--     ELSE					\ depth mismatch
+#--        S" WRONG NUMBER OF RESULTS: " ERROR
+#--     THEN ;
+.global do_rbracT
+do_rbracT:
+    DOCOLON
+
+    DEPTH
+    ACTUAL_DEPTH
+    FETCH
+    EQUAL
+    QBRANCH
+    ADDR(RBRACT1)  #-- IF depths match
+
+      DEPTH 
+      START_DEPTH
+      FETCH
+      GREATER
+      QBRANCH
+      ADDR(RBRACT2)  #-- IF... Si hay algo en la pila...
+  
+        DEPTH
+        START_DEPTH
+        FETCH
+        MINUS
+        LIT(0)
+        XDO        #-- Para cada elemento de la pila
+RBRACT3:
+          ACTUAL_RESULTS
+          II
+          CELLS
+          PLUS
+          FETCH
+          NOTEQUAL
+          QBRANCH
+          ADDR(RBRACT4)  #-- IF... si son diferentes
+
+            XSQUOTE(17, "INCORRECT RESULT ")
+            TYPE
+            UNLOOP
+            BRANCH
+            ADDR(RBRACT2)
+
+RBRACT4:  #-- Son iguales
+         XLOOP
+         ADDR(RBRACT3)
+         BRANCH
+         ADDR(RBRACT2)
+
+RBRACT1:  #-- ELSE (las profundidades difieren)
+    XSQUOTE(23, "WRONG NUMBER OF RESULTS")
+    TYPE
+
+RBRACT2:
+
+    EXIT

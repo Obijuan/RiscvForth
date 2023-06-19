@@ -12,10 +12,15 @@
     #-- Programa Forth a probar:
     #-- 
 
-    #-- Resultado:
-    U0
-    DOTHEX
-    CR
+    TLBRAC #--   T{
+
+    LIT(1) 
+
+    ARROW  #--   -> 
+
+    LIT(1)
+
+    RBRACT  #-- }T
 
     #-- Fin ejecución directa
     XSQUOTE(4," ok\n")

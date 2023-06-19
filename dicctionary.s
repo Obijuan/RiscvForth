@@ -482,11 +482,140 @@ link48:
     .align 2
     .word link48
     .byte 0
-lastword:
 link49:
     .byte 5
     .ascii "WORDS"
     .word do_words
+
+#-- Palabra 50
+    .align 2
+    .word link49
+    .byte 0
+link50:
+    .byte 4
+    .ascii "BASE"
+    .word do_base
+
+#-- Palabra 51
+    .align 2
+    .word link50
+    .byte 0
+link51:
+    .byte 1
+    .ascii "I"
+    .word do_ii
+
+#-- Palabra 52
+    .align 2
+    .word link51
+    .byte 0
+link52:
+    .byte 7
+    .ascii "DECIMAL"
+    .word do_decimal
+
+#-- Palabra 53
+    .align 2
+    .word link52
+    .byte 0
+link53:
+    .byte 5
+    .ascii "DEPTH"
+    .word do_depth
+
+#-- Palabra 54
+    .align 2
+    .word link53
+    .byte 0
+link54:
+    .byte 1
+    .byte 92   #-- \
+    .word do_comment
+
+#-- Palabra 55
+    .align 2
+    .word link54
+    .byte 0
+link55:
+    .byte 5
+    .ascii "CELLS"
+    .word do_cells
+
+#-- Palabra 56
+    .align 2
+    .word link55
+    .byte 0
+link56:
+    .byte 5
+    .ascii "ALLOT"
+    .word do_allot
+
+#-- Palabra 57
+    .align 2
+    .word link56
+    .byte 0
+link57:
+    .byte 14
+    .ascii "ACTUAL-RESULTS"
+    .word do_actual_results
+
+#-- Palabra 58
+    .align 2
+    .word link57
+    .byte 0
+link58:
+    .byte 4
+    .ascii ".HEX"
+    .word do_dothex
+
+#-- Palabra 59
+    .align 2
+    .word link58
+    .byte 0
+link59:
+    .byte 4
+    .ascii "DUMP"
+    .word do_dump
+
+#-- Palabra 60
+    .align 2
+    .word link59
+    .byte 0
+link60:
+    .byte 4
+    .ascii "SWAP"
+    .word do_swop
+
+#-- Palabra 61
+    .align 2
+    .word link60
+    .byte 0
+link61:
+    .byte 2
+    .ascii "T{"
+    .word do_tlbrac
+
+#-- Palabra 62
+    .align 2
+    .word link61
+    .byte 0
+link62:
+    .byte 2
+    .ascii "->"
+    .word do_arrow
+
+#-- Palabra 63
+    .align 2
+    .word link62
+    .byte 0
+lastword:
+link63:
+    .byte 2
+    .ascii "}T"
+    .word do_rbracT
+
+
+
 
 
 #-- Fin del diccionario
