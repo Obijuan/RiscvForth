@@ -610,8 +610,9 @@ UMAX1:
 #----------------------------------------------------
 .global do_bl
 do_bl:
-  DOCON
-  DW(0x20)
+  DOCOLON
+  CON(0x20)
+  EXIT
 
 #----------------------------------------------------
 # tib     -- a-addr     Terminal Input Buffer
@@ -630,8 +631,9 @@ do_tib:
     NEXT
 
 #--- Implementacion tipica
-#  DOCON
-#  DW(0x2000)
+#  DOCOON
+#  CON(0x2000)
+#  EXIT
 
 #----------------------------------------------------
 #  tibsize  -- n         size of TIB
@@ -640,8 +642,9 @@ do_tib:
 #----------------------------------------------------
 .global do_tibsize
 do_tibsize:
-  DOCON
-  DW(124)
+  DOCOLON
+  CON(124)
+  EXIT
 
 #== NUMERIC OUTPUT ================================
 #== Numeric conversion is done l.s.digit first, so
@@ -818,8 +821,9 @@ align_end:
 #----------------------------------------------------
 .global do_ninit
 do_ninit:
-  DOCON
-  DW(36)  #-- 9 palabras (de 4 bytes)
+  DOCOLON
+  CON(36)  #-- 9 palabras (de 4 bytes)
+  EXIT
 
 
 #------------------------- PRUEBAS ------------------------------------------
