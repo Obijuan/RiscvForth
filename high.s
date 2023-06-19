@@ -2902,3 +2902,12 @@ do_a:
     DOCOLON
     VAR
     EXIT
+
+#-------------------------------------
+#  ESC  --  27    Constant
+#-------------------------------------
+.global do_esc
+do_esc:  
+    DOCOLON
+    CON(27)
+    EXIT

@@ -116,22 +116,7 @@ link9:
     .byte 3
     .ascii "ESC"
     .word do_esc
-do_esc:  
-    .word 0xffc40413  #--addi s0, s0, -4
-    .word 0x00142023  #--sw ra, 0(s0)
-    .word 0x004002b7  #--li t0, 0x0040001C
-    .word 0x01c28293
-    .word 0x000280e7  #--jalr ra,t0,0
-    .word 0xCAFE  #-- CONSTANTE
 
-#--------------------------------------------
-#-- Codigo a ejecutar para leer la constante
-#-- almacenada en el campo de parametros
-#--  0xffc40413  #--addi s0, s0, -4
-#--  0x00142023  #--sw ra, 0(s0)
-#--  0x004002b7  #--li t0, 0x0040001C
-#--  0x01c28293
-#--  0x000280e7  #--jalr ra,t0,0
 
 #-- Palabra 10
     .align 2

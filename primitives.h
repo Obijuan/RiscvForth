@@ -42,7 +42,6 @@
 	DW(%con)
 .end_macro
 
-
 #-- Compilar una constante
 .macro CONSTANT
   jal do_constant
