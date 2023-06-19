@@ -52,6 +52,12 @@
   jal do_user
 .end_macro
 
+#-- Almacenar una variable del sistema
+#-- (No se mete en el diccionario)
+.macro DOUSER
+  PUSH_RA
+  jal douser
+.end_macro
 
 
 

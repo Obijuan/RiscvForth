@@ -457,11 +457,20 @@ link45:
     .align 2
     .word link45
     .byte 0
-lastword:
 link46:
     .byte 2
     .ascii ".S"
     .word do_dots
+
+#-- Palabra 47
+    .align 2
+    .word link46
+    .byte 0
+lastword:
+link47:
+    .byte 2
+    .ascii "U0"
+    .word do_u0
 
 #-- Fin del diccionario
 .align 2

@@ -13,21 +13,15 @@
     #-- 
 
     #-- Resultado:
-
-    
-
     U0
     DOTHEX
     CR
 
-    TOIN
-    DOTHEX
-    CR
-
-
     #-- Fin ejecución directa
     XSQUOTE(4," ok\n")
     TYPE
+
+    QUIT
 
 	#-- Terminar
 	BYE
