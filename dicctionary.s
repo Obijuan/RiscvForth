@@ -70,19 +70,18 @@ link5:
     .ascii "CONSTANT"
     .word do_constant
 
-
-
-
-
-
 #-- Palabra 6
-    .align 2
     .word link5
     .byte 0
 link6:
-    .byte 3
-    .ascii "NOP"
-    .word do_null
+    .byte 4
+    .ascii "USER"
+    .word do_user
+
+
+
+
+
 
 
 #-- Palabra 7
@@ -466,11 +465,21 @@ link46:
     .align 2
     .word link46
     .byte 0
-lastword:
 link47:
     .byte 2
     .ascii "U0"
     .word do_u0
+
+#-- Palabra 48
+    .align 2
+    .word link47
+    .byte 0
+lastword:
+link48:
+    .byte 3
+    .ascii "NOP"
+    .word do_null
+
 
 #-- Fin del diccionario
 .align 2
