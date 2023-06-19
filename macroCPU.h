@@ -131,11 +131,6 @@
 	  j %label
 	.end_macro
 
-	.macro DOCON
-	  PUSH_RA
-	  jal do_con
-	.end_macro
-
 	.macro DOUSER
 	  PUSH_RA
 	  jal douser
