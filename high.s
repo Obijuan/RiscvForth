@@ -58,7 +58,29 @@ do_constant:
 	EXIT
 
 
+#────────────────────────────────────────────────────────────────
+#  USER   n --     Definir una variable del sistema. n es el offset
+#                  dentro de la zona de usuario
+#────────────────────────────────────────────────────────────────
+.global do_user
+do_user:
+	DOCOLON
 
+    #-- Crear la variable de usuario cuyo nombre está en el TIB
+    COLON
+
+    #-- Añadir llamada a do_user
+    COMMAXT(douser2)
+
+    #-- Añadir espacio para la variable
+    #-- Su valor se toma de la pila
+    COMMA
+
+    #-- No añadir insrucciones de retorno
+    #-- El offset es el ultimo elemento
+    SEMI2
+
+    EXIT
 
 
 

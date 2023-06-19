@@ -14,8 +14,14 @@
 
     #-- Resultado:
 
-    NINIT
-    DOT
+    
+
+    U0
+    DOTHEX
+    CR
+
+    TOIN
+    DOTHEX
     CR
 
 

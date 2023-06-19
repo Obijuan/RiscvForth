@@ -220,8 +220,7 @@ do_var2:
 #--
 #-- Meter el valor de la consante en la pila
 #-- La constante está a continuación de la llamada a do_con
-#-- ESTA ES LA VERSION A USAR DESDE PROGRAMAS EN ASM Y
-#-- DECLARACIONES DIRECTAS A MANO EN EL DICCIONARIO
+#-- ESTA ES LA QUE SE DEBE USAR AL COMPILAR
 #────────────────────────────────────────────────────────────────
 .global do_con2
 do_con2:
@@ -276,6 +275,60 @@ do_con_hack:
 
 
 
+#──────────────────────────────────────────────────────────────────────────
+#-- DOUSER ---  a-addr     Ejecucion de una variable de usuario
+#--
+#-- Meter en la pila la direccion de la variable de usuario
+#-- Su direccion se calcula a partir de la direccion de la zona de usuario
+#-- (direccion base) menos el offset indicado por el parámetro
+#-- ESTA ES LA QUE SE DEBE USAR AL COMPILAR
+#-- En realidad todas las variabels de usuario están añadidas en ensamblador,
+#-- "a pelo", por lo que esta funcion no se usara... pero se deja por si
+#-- se quiere ampliar la cantidad de variables de usuario
+#──────────────────────────────────────────────────────────────────────────
+.global douser2
+douser2:
+
+	#-- La direccion de la constante esta en ra
+	#-- Leemos el valor de la constante (offset de la zona de usuario)
+	lw t0, 0(ra)
+
+	#-- añadir el offser a la direccion de la zona de usuario
+    add t0, s2, t0
+
+	#-- Meter direccion en la pila
+	PUSH_T0
+
+	#---- NEXT
+	POP_RA
+	NEXT
+
+
+#──────────────────────────────────────────────────────────────────────────
+#-- DOUSER ---  a-addr     Ejecucion de una variable de usuario
+#--
+#-- Meter en la pila la direccion de la variable de usuario
+#-- Su direccion se calcula a partir de la direccion de la zona de usuario
+#-- (direccion base) menos el offset indicado por el parámetro
+#-- ESTA ES LA VERSION A USAR DESDE PROGRAMAS EN ASM Y
+#-- DECLARACIONES DIRECTAS A MANO EN EL DICCIONARIO
+#──────────────────────────────────────────────────────────────────────────
+douser:
+    #-- Leer el parametro en t0 (offset)
+	READLIT_T0
+
+    #-- añadir el offser a la direccion de la zona de usuario
+    add t0, s2, t0
+
+	#-- Meter direccion en la pila
+	PUSH_T0
+
+	#---- NEXT
+	POP_RA
+	NEXT
+
+
+
 
 #---------------------------------------------------
 #-- DOCREATE, code action of newly created words
@@ -295,27 +348,6 @@ docreate:
 	POP_RA
 	NEXT
 
-#---------------------------------------------------
-#--  DOUSER, code action of USER,
-#-- entered by CALL DOUSER
-#--    --- a-addr
-#--
-#-- Meter en la pila la direccion de la zona de usuario
-#-- (base) menos el offsert indicado por el parámetro
-#---------------------------------------------------
-douser:
-    #-- Leer el parametro en t0 (offset)
-	READLIT_T0
-
-    #-- añadir el offser a la direccion de la zona de usuario
-    add t0, s2, t0
-
-	#-- Meter direccion en la pila
-	PUSH_T0
-
-	#---- NEXT
-	POP_RA
-	NEXT
 
 
 #---------------

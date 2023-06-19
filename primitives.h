@@ -47,7 +47,10 @@
   jal do_constant
 .end_macro
 
-
+#-- Compilar una variable de usuario
+.macro USER
+  jal do_user
+.end_macro
 
 
 
