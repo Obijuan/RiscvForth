@@ -35,6 +35,14 @@
   jal do_variable
 .end_macro
 
+#-- CON: Ejecucion de una constante
+#-- (La constante NO se crea en el diccionario)
+.macro CON (%con)
+	jal do_con_hack
+	DW(%con)
+.end_macro
+
+
 #-- Compilar una constante
 .macro CONSTANT
   jal do_constant

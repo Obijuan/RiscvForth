@@ -263,6 +263,37 @@ do_con2:
 	#-- Siguiente instruccion
 	NEXT
 
+#────────────────────────────────────────────────────────────────
+#-- DOCON  ---  x     Ejecucion de una constante
+#--
+#-- Meter el valor de la consante en la pila
+#-- La constante está a continuación de la llamada a do_con
+#-- ESTA ES LA VERSION A USAR DESDE PROGRAMAS EN ASM Y
+#-- DECLARACIONES DIRECTAS A MANO EN EL DICCIONARIO
+#────────────────────────────────────────────────────────────────
+#-- NOTA: Es igual a do_lit_hack
+#────────────────────────────────────────────────────────────────
+.global do_con_hack
+do_con_hack:
+
+	#-- Leer la constante en t0
+	#-- La direccion de la constantel está en ra
+	lw t0, 0(ra)
+
+	#-- HACK: En realidad no es la constante exacta, esta
+	#--  dentro de la instruccion lui (en los 20-bits de mayor peso)
+	#-- Desplazar t0 >> 12  (12 bits a la derecha)
+	srai t0,t0,12
+
+	#-- En t0 tenemos la constante
+    #-- Lo metemos en la pila
+    PUSH_T0
+
+    #-- Incrementar ra en 4 para que se ejecute la instruccion
+    #-- tras el literal 
+    addi ra,ra,4
+    
+    NEXT
 
 
 
