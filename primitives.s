@@ -215,30 +215,6 @@ do_var2:
 	#-- Siguiente instruccion
 	NEXT
 
-
-#────────────────────────────────────────────────────────────────
-#-- DOCON  ---  x     Ejecucion de una constante
-#--
-#-- Meter el valor de la consante en la pila
-#-- La constante está a continuación de la llamada a do_con
-#-- ESTA ES LA VERSION A USAR DESDE PROGRAMAS EN ASM Y
-#-- DECLARACIONES DIRECTAS A MANO EN EL DICCIONARIO
-#────────────────────────────────────────────────────────────────
-.global do_con
-do_con:
-
-	#-- Leer la constante en t0
-	READLIT_T0
-
-	#-- Meterla en la pila
-	PUSH_T0
-
-	#-- Retornamos a la direccion que hay en la pila R
-	POP_RA
-
-	#-- Siguiente instruccion
-	NEXT
-
 #────────────────────────────────────────────────────────────────
 #-- DOCON2  ---  x     Ejecucion de una constante
 #--
