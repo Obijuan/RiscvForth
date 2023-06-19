@@ -270,11 +270,6 @@ do_con_hack:
     
     NEXT
 
-
-
-
-
-
 #──────────────────────────────────────────────────────────────────────────
 #-- DOUSER ---  a-addr     Ejecucion de una variable de usuario
 #--
@@ -303,7 +298,6 @@ douser2:
 	POP_RA
 	NEXT
 
-
 #──────────────────────────────────────────────────────────────────────────
 #-- DOUSER ---  a-addr     Ejecucion de una variable de usuario
 #--
@@ -326,6 +320,85 @@ douser:
 	#---- NEXT
 	POP_RA
 	NEXT
+
+
+#──────────────────────────────────────────────────────────────────────────
+#-- Emit:  u ---   Imprimir el caracter que está en la pila
+#-- https://forth-standard.org/standard/core/EMIT
+#──────────────────────────────────────────────────────────────────────────
+.global do_emit
+do_emit:
+
+	#-- Leer el caracter de la pila
+	POP_T0
+
+	#-- Comprobar en qué modo estamos
+	la t5, unicode_state
+	lb t6, 0(t5)  #-- t5 = modo actual (0 ascii, 1 unicode)
+
+	#-- Si es 0, saltamos a modo ascii
+	beq t6,zero,modo_ascii
+
+emit_unicode:
+	#-- Estamos en modo unicode
+	#-- Obtener el puntero unicode
+	la t1, unicode  #-- t1: Puntero a inicio zona unicode
+	la t2, unicode_offset   #---t2: Puntero a offset
+
+	#-- Leer offset
+	lb t3, 0(t2)    #-- t3: offset
+
+	#-- Obtener direccion actual a zona unicode: t1 + offset
+	add  t1,t1,t3
+
+	#-- Almacenar byte en zona unicode
+	sb t0, 0(t1) 
+
+	#-- Incrementar offset, y actualizarlo
+	addi t3, t3, 1
+	sb t3, 0(t2)
+
+	#-- Si este byte es distinto de 0: nos quedamos como estamos
+	bne t0,zero,emit_end
+
+	#-- El byte es 0: Imprimir cadena unicode y pasar a modo ascii
+	la a0, unicode  #-- Apuntar al primer caracter unicode
+
+	#-- Imprimir cadena unicode
+	li a7, 4
+	ecall
+
+	#-- Pasar a modo ascii
+	sb zero, 0(t5)
+
+	#-- Poner offset a 0
+	sb zero, 0(t2)
+
+	#-- Terminar
+	j emit_end
+
+modo_ascii:
+	#-- Estamos en modo ascii
+	#-- Comprobar byte a imprimir
+	#-- Si es menor a 128, se imprime un caracter ascii y se termina
+	li t1, 128
+	blt t0,t1,emit_ascii
+	
+	#-- NO es un caracter ascii: Pasar a modo unicode
+	li t1, 1
+	sb t1, 0(t5)
+	j emit_unicode
+
+emit_ascii:
+	#-- Imprimir
+	PRINT_CHAR_T0
+
+emit_end:
+	NEXT
+
+
+
+
 
 
 
@@ -1014,78 +1087,9 @@ do_dothex:
 	ret
 
 	
-#-----------------------------------------------------
-#-- Emit:  u ---   Imprimir el caracter que está en la pila
-#-----------------------------------------------------
-.global do_emit
-do_emit:
 
-	#-- Leer el caracter de la pila
-	POP_T0
 
-	#-- Comprobar en qué modo estamos
-	la t5, unicode_state
-	lb t6, 0(t5)  #-- t5 = modo actual (0 ascii, 1 unicode)
 
-	#-- Si es 0, saltamos a modo ascii
-	beq t6,zero,modo_ascii
-
-emit_unicode:
-	#-- Estamos en modo unicode
-	#-- Obtener el puntero unicode
-	la t1, unicode  #-- t1: Puntero a inicio zona unicode
-	la t2, unicode_offset   #---t2: Puntero a offset
-
-	#-- Leer offset
-	lb t3, 0(t2)    #-- t3: offset
-
-	#-- Obtener direccion actual a zona unicode: t1 + offset
-	add  t1,t1,t3
-
-	#-- Almacenar byte en zona unicode
-	sb t0, 0(t1) 
-
-	#-- Incrementar offset, y actualizarlo
-	addi t3, t3, 1
-	sb t3, 0(t2)
-
-	#-- Si este byte es distinto de 0: nos quedamos como estamos
-	bne t0,zero,emit_end
-
-	#-- El byte es 0: Imprimir cadena unicode y pasar a modo ascii
-	la a0, unicode  #-- Apuntar al primer caracter unicode
-
-	#-- Imprimir cadena unicode
-	li a7, 4
-	ecall
-
-	#-- Pasar a modo ascii
-	sb zero, 0(t5)
-
-	#-- Poner offset a 0
-	sb zero, 0(t2)
-
-	#-- Terminar
-	j emit_end
-
-modo_ascii:
-	#-- Estamos en modo ascii
-	#-- Comprobar byte a imprimir
-	#-- Si es menor a 128, se imprime un caracter ascii y se termina
-	li t1, 128
-	blt t0,t1,emit_ascii
-	
-	#-- NO es un caracter ascii: Pasar a modo unicode
-	li t1, 1
-	sb t1, 0(t5)
-	j emit_unicode
-
-emit_ascii:
-	#-- Imprimir
-	PRINT_CHAR_T0
-
-emit_end:
-	NEXT
 
 #-----------------------------------------------------
 #-- XEmit:  0 n1 n2 --      Imprimir caracter unicode

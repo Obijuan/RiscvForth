@@ -78,20 +78,19 @@ link6:
     .ascii "USER"
     .word do_user
 
-
-
-
-
-
-
 #-- Palabra 7
+#-- https://forth-standard.org/standard/core/EMIT
     .align 2
     .word link6
     .byte 0
 link7:
-    .byte 5
-    .ascii "WORDS"
-    .word do_words
+    .byte 4
+    .ascii "EMIT"
+    .word do_emit
+
+
+
+
 
 
 #-- Palabra 8: VARIABLE de prueba, creada directamente en el diccionario
@@ -474,11 +473,20 @@ link47:
     .align 2
     .word link47
     .byte 0
-lastword:
 link48:
     .byte 3
     .ascii "NOP"
     .word do_null
+
+#-- Palabra 49
+    .align 2
+    .word link48
+    .byte 0
+lastword:
+link49:
+    .byte 5
+    .ascii "WORDS"
+    .word do_words
 
 
 #-- Fin del diccionario
