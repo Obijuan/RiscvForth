@@ -61,18 +61,18 @@ link4:
     .ascii "VARIABLE"
     .word do_variable
 
-
-
-
-
 #-- Palabra 5
-    .align 2
+#-- https://forth-standard.org/standard/core/CONSTANT
     .word link4
     .byte 0
 link5:
-    .byte 2
-    .ascii ".S"
-    .word do_dots
+    .byte 8
+    .ascii "CONSTANT"
+    .word do_constant
+
+
+
+
 
 
 #-- Palabra 6
@@ -463,13 +463,20 @@ link44:
     .align 2
     .word link44
     .byte 0
-lastword:
 link45:
     .byte 1
     .ascii "."
     .word do_dot
     
-
+#-- Palabra 46
+    .align 2
+    .word link45
+    .byte 0
+lastword:
+link46:
+    .byte 2
+    .ascii ".S"
+    .word do_dots
 
 #-- Fin del diccionario
 .align 2
