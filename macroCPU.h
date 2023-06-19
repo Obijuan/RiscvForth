@@ -136,11 +136,6 @@
 	  jal do_con
 	.end_macro
 
-	.macro DOVAR
-	  PUSH_RA
-      jal dovar
-	.end_macro
-
 	.macro DOUSER
 	  PUSH_RA
 	  jal douser

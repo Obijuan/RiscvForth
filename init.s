@@ -226,14 +226,12 @@ unicode_state:
 #-- Codigo en direcciones fijas
 #--------------------------------------------------------------
 #---------------------------------------------------
-#--  DOVAR, code action of VARIABLE, entered by CALL
 #-- DOCREATE, code action of newly created words
 #--    --- a-addr
 #--
 #-- Meter la direccion de la variable en la pila
 #---------------------------------------------------
 #-- Dirección 0x0004
-dovar2:
 docreate:
 
     #-- La direccion de la variable esta en ra

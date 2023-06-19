@@ -105,14 +105,8 @@ link8:
     .word do_a
 
 
-#-------------------------------------------
-#-- Codigo a ejecutar para leer la variable
-#-- almacenada en el campo de parametros
-#-- 0xffc40413  #-- addi s0,s0, -4
-#-- 0x00142023  #-- sw ra, 0(s0)
-#-- 0x004002b7  #-- li t0, 0x00400004
-#-- 0x00428293  
-#-- 0x000280e7  #-- jalr ra,t0,0
+
+
 
 #-- Palabra 9: CONSTANTE
     .align 2

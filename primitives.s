@@ -277,7 +277,6 @@ do_con2:
 #-- Meter la direccion de la variable en la pila
 #---------------------------------------------------
 .global docreate
-dovar:
 docreate:
 
     #-- La direccion de la variable esta en ra
@@ -1498,8 +1497,9 @@ do_unloop:
 # EXECUTE   SAVEKEY  -- addr  temporary storage for KEY?
 #---------------------------------------------------
 do_savekey:
-	DOVAR
-	DW(0)
+	DOCOLON
+	VAR
+	EXIT
 
 #-----------------------------------------------------
 #  FILL   c-addr u char --  fill memory with char
