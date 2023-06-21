@@ -1018,6 +1018,7 @@ do_dot:
 # HEX     --       set number base to hex
 #  16 BASE ! ;
 #----------------------------------------------------
+.global do_hex
 do_hex:
 	DOCOLON
 

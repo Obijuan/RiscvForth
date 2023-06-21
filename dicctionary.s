@@ -608,11 +608,74 @@ link62:
     .align 2
     .word link62
     .byte 0
-lastword:
 link63:
     .byte 2
     .ascii "}T"
     .word do_rbracT
+
+#-- Palabra 64
+    .align 2
+    .word link63
+    .byte 0
+link64:
+    .byte 3
+    .ascii "AND"
+    .word do_and
+
+#-- Palabra 65
+    .align 2
+    .word link64
+    .byte 0
+link65:
+    .byte 6
+    .ascii "INVERT"
+    .word do_invert
+
+#-- Palabra 66
+    .align 2
+    .word link65
+    .byte 0
+link66:
+    .byte 2
+    .ascii "OR"
+    .word do_or
+
+#-- Palabra 67
+    .align 2
+    .word link66
+    .byte 0
+link67:
+    .byte 3
+    .ascii "XOR"
+    .word do_xor
+
+#-- Palabra 68
+    .align 2
+    .word link67
+    .byte 0
+link68:
+    .byte 6
+    .ascii "RSHIFT"
+    .word do_rshift
+
+#-- Palabra 69
+    .align 2
+    .word link68
+    .byte 0
+link69:
+    .byte 3
+    .ascii "HEX"
+    .word do_hex
+
+#-- Palabra 70
+    .align 2
+    .word link69
+    .byte 0
+lastword:
+link70:
+    .byte 2
+    .ascii "2*"
+    .word do_twostar
 
 
 
