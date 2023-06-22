@@ -671,13 +671,155 @@ link69:
     .align 2
     .word link69
     .byte 0
-lastword:
 link70:
     .byte 2
     .ascii "2*"
     .word do_twostar
 
+#-- Palabra 71
+    .align 2
+    .word link70
+    .byte 0
+link71:
+    .byte 2
+    .ascii "2/"
+    .word do_twoslash
 
+#-- Palabra 72
+    .align 2
+    .word link71
+    .byte 0
+link72:
+    .byte 6
+    .ascii "LSHIFT"
+    .word do_lshift
+
+#-- Palabra 73
+    .align 2
+    .word link72
+    .byte 0
+link73:
+    .byte 2
+    .ascii "0="
+    .word do_zeroequal
+
+#-- Palabra 74
+    .align 2
+    .word link73
+    .byte 0
+link74:
+    .byte 1
+    .ascii "="
+    .word do_equal
+
+#-- Palabra 75
+    .align 2
+    .word link74
+    .byte 0
+link75:
+    .byte 2
+    .ascii "0<"
+    .word do_zeroless
+
+#-- Palabra 76
+    .align 2
+    .word link75
+    .byte 0
+link76:
+    .byte 1
+    .ascii "<"
+    .word do_less
+
+#-- Palabra 77
+    .align 2
+    .word link76
+    .byte 0
+link77:
+    .byte 2
+    .ascii "U<"
+    .word do_uless
+
+#-- Palabra 78
+    .align 2
+    .word link77
+    .byte 0
+link78:
+    .byte 3
+    .ascii "MIN"
+    .word do_min
+
+#-- Palabra 79
+    .align 2
+    .word link78
+    .byte 0
+link79:
+    .byte 3
+    .ascii "MAX"
+    .word do_max
+
+#-- Palabra 80
+    .align 2
+    .word link79
+    .byte 0
+link80:
+    .byte 4
+    .ascii "DROP"
+    .word do_drop
+
+#-- Palabra 81
+    .align 2
+    .word link80
+    .byte 0
+link81:
+    .byte 4
+    .ascii "OVER"
+    .word do_over
+
+#-- Palabra 82
+    .align 2
+    .word link81
+    .byte 0
+link82:
+    .byte 5
+    .ascii "2DROP"
+    .word do_twodrop
+
+#-- Palabra 83
+    .align 2
+    .word link82
+    .byte 0
+link83:
+    .byte 4
+    .ascii "2DUP"
+    .word do_twodup
+
+#-- Palabra 84
+    .align 2
+    .word link83
+    .byte 0
+link84:
+    .byte 5
+    .ascii "2OVER"
+    .word do_twoover
+
+#-- Palabra 85
+    .align 2
+    .word link84
+    .byte 0
+link85:
+    .byte 5
+    .ascii "2SWAP"
+    .word do_twoswap
+
+#-- Palabra 86
+    .align 2
+    .word link85
+    .byte 0
+lastword:
+link86:
+    .byte 4
+    .ascii "?DUP"
+    .word do_qdup
 
 
 
