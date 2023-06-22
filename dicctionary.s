@@ -842,11 +842,47 @@ link88:
     .align 2
     .word link88
     .byte 0
-lastword:
 link89:
     .byte 2
     .ascii "R@"
     .word do_rfetch
+
+#-- Palabra 90
+    .align 2
+    .word link89
+    .byte 0
+link90:
+    .byte 1
+    .ascii "-"
+    .word do_minus
+
+#-- Palabra 91
+    .align 2
+    .word link90
+    .byte 0
+link91:
+    .byte 2
+    .ascii "1+"
+    .word do_oneplus
+
+#-- Palabra 92
+    .align 2
+    .word link91
+    .byte 0
+link92:
+    .byte 3
+    .ascii "ABS"
+    .word do_abs
+
+#-- Palabra 93
+    .align 2
+    .word link92
+    .byte 0
+lastword:
+link93:
+    .byte 6
+    .ascii "NEGATE"
+    .word do_negate
 
 
 

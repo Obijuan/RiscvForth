@@ -265,6 +265,57 @@ T{ 123 GR2 -> 123 }T
 T{  1S GR1 ->  1S }T      ( Return stack holds cells )
 
 \ ====================== F.3.8 Addition and Subtraction
+\ ========= F.6.1.0120 +
+T{        0  5 + ->          5 }T
+T{        5  0 + ->          5 }T
+T{        0 -5 + ->         -5 }T
+T{       -5  0 + ->         -5 }T
+T{        1  2 + ->          3 }T
+T{        1 -2 + ->         -1 }T
+T{       -1  2 + ->          1 }T
+T{       -1 -2 + ->         -3 }T
+T{       -1  1 + ->          0 }T
+T{ MID-UINT  1 + -> MID-UINT+1 }T
+
+\ ========= F.6.1.0160 -
+T{          0  5 - ->       -5 }T
+T{          5  0 - ->        5 }T
+T{          0 -5 - ->        5 }T
+T{         -5  0 - ->       -5 }T
+T{          1  2 - ->       -1 }T
+T{          1 -2 - ->        3 }T
+T{         -1  2 - ->       -3 }T
+T{         -1 -2 - ->        1 }T
+T{          0  1 - ->       -1 }T
+T{ MID-UINT+1  1 - -> MID-UINT }T
+
+\ ========= F.6.1.0290 1+
+T{        0 1+ ->          1 }T
+T{       -1 1+ ->          0 }T
+T{        1 1+ ->          2 }T
+T{ MID-UINT 1+ -> MID-UINT+1 }T
+
+\ ========= F.6.1.0300 1-
+T{          2 1- ->        1 }T
+T{          1 1- ->        0 }T
+T{          0 1- ->       -1 }T
+T{ MID-UINT+1 1- -> MID-UINT }T
+
+\ ========= F.6.1.0690 ABS
+T{       0 ABS ->          0 }T
+T{       1 ABS ->          1 }T
+T{      -1 ABS ->          1 }T
+T{ MIN-INT ABS -> MID-UINT+1 }T
+
+\ ========= F.6.1.1910 NEGATE
+T{  0 NEGATE ->  0 }T
+T{  1 NEGATE -> -1 }T
+T{ -1 NEGATE ->  1 }T
+T{  2 NEGATE -> -2 }T
+T{ -2 NEGATE ->  2 }T
+
+
+\ ====================== F.3.9 Multiplication
 
 
 
@@ -284,14 +335,10 @@ T{  1S GR1 ->  1S }T      ( Return stack holds cells )
 0 INVERT 1 RSHIFT INVERT CONSTANT MID-UINT+1
 
 
-
-F.6.1.0120 +
-F.6.1.0160 -,
-F.6.1.0290 1+,
-F.6.1.0300 1-, 
-F.6.1.0690 ABS and 
-F.6.1.1910 NEGATE. 
-
+F.6.1.2170 S>D,
+F.6.1.0090 *,
+F.6.1.1810 M*,
+F.6.1.2360 UM*. 
 
 
 
