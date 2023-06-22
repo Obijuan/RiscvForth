@@ -1753,7 +1753,7 @@ snext:
 #============== MULTIPLY AND DIVIDE ===========================
 
 #-----------------------------------------------------
-#  C UM*     u1 u2 -- ud   unsigned 16x16->32 mult.
+#  C UM*     u1 u2 -- ud   unsigned 32x32->64 mult.
 #-----------------------------------------------------
 do_umstar:
 
@@ -1764,22 +1764,47 @@ do_umstar:
 	#--- Obtener el otro numero: t0 = u1
 	POP_T0
 
-	#-- Realizar la multiplicacion: t0 * t1
-	mul t0, t0, t1 
+	#-- Realizar la multiplicacion: t0 * t1 (palabra baja)
+	mul t2, t0, t1 
 
-	#-- Guardar resultado en la pila
+	#-- Multiplicacion. Palabra alta
+	mulhu t3, t0, t1
+
+	#-- Guardar resultado en la pila (palabra baja)
+	mv t0,t2  
 	PUSH_T0
 
-	#-- HACK: Es un doble. Hay que guardar en la pila
-	#-- el más significativo (que será 0 ó -1 según el signo)
-	#-- Como en este caso es un unsigned lo rellenamos con 0
-	mv t0,zero
+	mv t0,t3
 	PUSH_T0
 
 	NEXT
 
+#----------------------------------------------------
+# M*     n1 n2 -- d    signed 32*32->64 multiply
+#----------------------------------------------------
+.global do_mstar
+do_mstar:
+	#--- Obtener numero: t1 = n2
+	POP_T0
+	mv t1,t0
 
+	#--- Obtener el otro numero: t0 = n1
+	POP_T0
 
+	#-- Realizar la multiplicacion: t0 * t1 (palabra baja)
+	mul t2, t0, t1 
+
+	#-- Multiplicacion. Palabra alta
+	mulh t3, t0, t1
+
+	#-- Guardar resultado en la pila (palabra baja)
+	mv t0,t2  
+	PUSH_T0
+
+	mv t0,t3
+	PUSH_T0
+
+	NEXT
 
 
 #-----------------------------------------------------

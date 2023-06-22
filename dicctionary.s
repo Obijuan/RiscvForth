@@ -878,11 +878,47 @@ link92:
     .align 2
     .word link92
     .byte 0
-lastword:
 link93:
     .byte 6
     .ascii "NEGATE"
     .word do_negate
+
+#-- Palabra 94
+    .align 2
+    .word link93
+    .byte 0
+link94:
+    .byte 3
+    .ascii "S>D"
+    .word do_stod
+
+#-- Palabra 95
+    .align 2
+    .word link94
+    .byte 0
+link95:
+    .byte 1
+    .ascii "*"
+    .word do_star
+
+#-- Palabra 96
+    .align 2
+    .word link95
+    .byte 0
+link96:
+    .byte 3
+    .ascii "UM*"
+    .word do_umstar
+
+#-- Palabra 97
+    .align 2
+    .word link96
+    .byte 0
+lastword:
+link97:
+    .byte 2
+    .ascii "M*"
+    .word do_mstar
 
 
 
