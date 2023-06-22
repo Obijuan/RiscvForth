@@ -815,11 +815,38 @@ link85:
     .align 2
     .word link85
     .byte 0
-lastword:
 link86:
     .byte 4
     .ascii "?DUP"
     .word do_qdup
+
+#-- Palabra 87
+    .align 2
+    .word link86
+    .byte 0
+link87:
+    .byte 2
+    .ascii ">R"
+    .word do_tor
+
+#-- Palabra 88
+    .align 2
+    .word link87
+    .byte 0
+link88:
+    .byte 2
+    .ascii "R>"
+    .word do_rfrom
+
+#-- Palabra 89
+    .align 2
+    .word link88
+    .byte 0
+lastword:
+link89:
+    .byte 2
+    .ascii "R@"
+    .word do_rfetch
 
 
 
