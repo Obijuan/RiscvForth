@@ -372,10 +372,82 @@ T{ MIN-INT MIN-INT M* ->       0 MSB 1 RSHIFT   }T
 T{ MAX-INT MIN-INT M* ->     MSB MSB 2/         }T
 T{ MAX-INT MAX-INT M* ->       1 MSB 2/ INVERT  }T
 
+\ ====================== F.3.10 Division
+\ ======== F.6.1.1561 FM/MOD
+T{       0 S>D              1 FM/MOD ->  0       0 }T
+T{       1 S>D              1 FM/MOD ->  0       1 }T
+T{       2 S>D              1 FM/MOD ->  0       2 }T
+
+
+
+\ ========= F.6.1.2214 SM/REM
+T{       0 S>D              1 SM/REM ->  0       0 }T
+T{       1 S>D              1 SM/REM ->  0       1 }T
+T{       2 S>D              1 SM/REM ->  0       2 }T
+T{      -1 S>D              1 SM/REM ->  0      -1 }T
+T{      -2 S>D              1 SM/REM ->  0      -2 }T
+T{       0 S>D             -1 SM/REM ->  0       0 }T
+T{       1 S>D             -1 SM/REM ->  0      -1 }T
+T{       2 S>D             -1 SM/REM ->  0      -2 }T
+T{      -1 S>D             -1 SM/REM ->  0       1 }T
+T{      -2 S>D             -1 SM/REM ->  0       2 }T
+T{       2 S>D              2 SM/REM ->  0       1 }T
+T{      -1 S>D             -1 SM/REM ->  0       1 }T
+T{      -2 S>D             -2 SM/REM ->  0       1 }T
+T{       7 S>D              3 SM/REM ->  1       2 }T
+T{       7 S>D             -3 SM/REM ->  1      -2 }T
+T{      -7 S>D              3 SM/REM -> -1      -2 }T
+T{      -7 S>D             -3 SM/REM -> -1       2 }T
+T{ MAX-INT S>D              1 SM/REM ->  0 MAX-INT }T
+T{ MIN-INT S>D              1 SM/REM ->  0 MIN-INT }T
+T{ MAX-INT S>D        MAX-INT SM/REM ->  0       1 }T
+T{ MIN-INT S>D        MIN-INT SM/REM ->  0       1 }T
+
+
+\ ======== F.6.1.2370 UM/MOD
+T{        0            0        1 UM/MOD -> 0        0 }T
+T{        1            0        1 UM/MOD -> 0        1 }T
+T{        1            0        2 UM/MOD -> 1        0 }T
+T{        3            0        2 UM/MOD -> 1        1 }T
+T{ MAX-UINT        2 UM*        2 UM/MOD -> 0 MAX-UINT }T
+T{ MAX-UINT        2 UM* MAX-UINT UM/MOD -> 0        2 }T
+T{ MAX-UINT MAX-UINT UM* MAX-UINT UM/MOD -> 0 MAX-UINT }T
+
+\ ====================== F.3.11 Memory
+\ ========== F.6.1.0150 , (COMMA)
+HERE 1 ,
+HERE 2 ,
+CONSTANT 2ND
+CONSTANT 1ST
+
+T{       1ST 2ND U< -> <TRUE> }T \ HERE MUST GROW WITH ALLOT
+T{       1ST CELL+  -> 2ND }T \ ... BY ONE CELL
+T{   1ST 1 CELLS +  -> 2ND }T
+T{     1ST @ 2ND @  -> 1 2 }T
+T{         5 1ST !  ->     }T
+T{     1ST @ 2ND @  -> 5 2 }T
+T{         6 2ND !  ->     }T
+T{     1ST @ 2ND @  -> 5 6 }T
+T{           1ST 2@ -> 6 5 }T
+T{       2 1 1ST 2! ->     }T
+T{           1ST 2@ -> 2 1 }T
+T{ 1S 1ST !  1ST @  -> 1S  }T    \ CAN STORE CELL-WIDE VALUE
+
+\ ========== F.6.1.0130 +! 
+T{  0 1ST !        ->   }T
+T{  1 1ST +!       ->   }T
+T{    1ST @        -> 1 }T
+T{ -1 1ST +! 1ST @ -> 0 }
+
+\ ========== F.6.1.0890 CELLS
+( CELLS >= 1 AU, INTEGRAL MULTIPLE OF CHAR SIZE, >= 16 BITS )
+T{ 1 CELLS 1 <         -> <FALSE> }T
+
+
 ( ********************* TODO ************************** )
 
 
-( ************** (CACHE: POR COMIDIDAD DE LAS PRUEBAS )
+( ************** (CACHE: POR COMODIDAD DE LAS PRUEBAS )
 0  CONSTANT 0S  ( Numero binario con todo ceros )
 -1 CONSTANT 1S  ( Numero binario con todo unos )
 0S CONSTANT <FALSE>
@@ -387,15 +459,102 @@ T{ MAX-INT MAX-INT M* ->       1 MSB 2/ INVERT  }T
 0 INVERT 1 RSHIFT INVERT CONSTANT MID-UINT+1
 1S 1 RSHIFT INVERT CONSTANT MSB  ( Definir constante MSB: 0x80000000 )
 
+HERE 1 ,
+HERE 2 ,
+CONSTANT 2ND
+CONSTANT 1ST
 
 
-F.3.10 Division
+\ ========== F.6.1.0890 CELLS (PENDING...)
 
-Due to the complexity of the division operators they are tested separately from 
-the multiplication operators. The basic division operators are tested first: 
-F.6.1.1561 FM/MOD, 
-F.6.1.2214 SM/REM, 
-and F.6.1.2370 UM/MOD.
+\-- Esta palabra te dice el numero de bits a 1 del numero en la pila
+\-- 1 BITS --> 1
+\-- 3 BITS --> 2
+\-- 15 BITS --> 4
+\-- ERROR!!!! ESTA PALABRA PETA EN EL RVFORTH!! DEBUG!!!!!!
+: BITS ( X -- U ) 0 SWAP BEGIN DUP WHILE DUP MSB AND IF >R 1+ R> THEN 2* REPEAT DROP ;
+
+T{ 1 CELLS 1 CHARS MOD ->    0    }T
+T{ 1S BITS 10 <        -> <FALSE> }T
+
+
+F.6.1.0890 CELLS should then be performed.
+
+The test (F.6.1.0860 C,) also tests the single character memory words C@, C!, and CHAR+, 
+leaving the test F.6.1.0898 CHARS to be performed seperatly.
+
+Finally, the memory access alignment test F.6.1.0705 ALIGN includes a test of ALIGNED
+, leaving F.6.1.0710 ALLOT as the final test in this group. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\ =================== TESTS NO PASADOS
+\ == TODO: UM/MOD no está implementando para numeros grandes. El valor más significativo se ignora
+\ ==  y se hace una division entre numeros de 32-bits ()
+
+\ ======== F.6.1.1561 FM/MOD ( PENDING...)
+T{      -1 S>D              1 FM/MOD ->  0      -1 }T
+T{      -2 S>D              1 FM/MOD ->  0      -2 }T
+T{       0 S>D             -1 FM/MOD ->  0       0 }T
+T{       1 S>D             -1 FM/MOD ->  0      -1 }T
+T{       2 S>D             -1 FM/MOD ->  0      -2 }T
+T{      -1 S>D             -1 FM/MOD ->  0       1 }T
+T{      -2 S>D             -1 FM/MOD ->  0       2 }T
+T{       2 S>D              2 FM/MOD ->  0       1 }T
+T{      -1 S>D             -1 FM/MOD ->  0       1 }T
+T{      -2 S>D             -2 FM/MOD ->  0       1 }T
+T{       7 S>D              3 FM/MOD ->  1       2 }T
+T{       7 S>D             -3 FM/MOD -> -2      -3 }T
+T{      -7 S>D              3 FM/MOD ->  2      -3 }T
+T{      -7 S>D             -3 FM/MOD -> -1       2 }T
+T{ MAX-INT S>D              1 FM/MOD ->  0 MAX-INT }T
+T{ MIN-INT S>D              1 FM/MOD ->  0 MIN-INT }T
+T{ MAX-INT S>D        MAX-INT FM/MOD ->  0       1 }T
+T{ MIN-INT S>D        MIN-INT FM/MOD ->  0       1 }T
+T{    1S 1                  4 FM/MOD ->  3 MAX-INT }T
+T{       1 MIN-INT M*       1 FM/MOD ->  0 MIN-INT }T
+T{       1 MIN-INT M* MIN-INT FM/MOD ->  0       1 }T
+T{       2 MIN-INT M*       2 FM/MOD ->  0 MIN-INT }T
+T{       2 MIN-INT M* MIN-INT FM/MOD ->  0       2 }T
+T{       1 MAX-INT M*       1 FM/MOD ->  0 MAX-INT }T
+T{       1 MAX-INT M* MAX-INT FM/MOD ->  0       1 }T
+T{       2 MAX-INT M*       2 FM/MOD ->  0 MAX-INT }T
+T{       2 MAX-INT M* MAX-INT FM/MOD ->  0       2 }T
+T{ MIN-INT MIN-INT M* MIN-INT FM/MOD ->  0 MIN-INT }T
+T{ MIN-INT MAX-INT M* MIN-INT FM/MOD ->  0 MAX-INT }T
+T{ MIN-INT MAX-INT M* MAX-INT FM/MOD ->  0 MIN-INT }T
+T{ MAX-INT MAX-INT M* MAX-INT FM/MOD ->  0 MAX-INT }T
+
+
+
+
+\ ========= F.6.1.2214 SM/REM (PENDING...)
+
+
+T{      1S 1                4 SM/REM ->  3 MAX-INT }T
+T{       2 MIN-INT M*       2 SM/REM ->  0 MIN-INT }T
+T{       2 MIN-INT M* MIN-INT SM/REM ->  0       2 }T
+T{       2 MAX-INT M*       2 SM/REM ->  0 MAX-INT }T
+T{       2 MAX-INT M* MAX-INT SM/REM ->  0       2 }T
+T{ MIN-INT MIN-INT M* MIN-INT SM/REM ->  0 MIN-INT }T
+T{ MIN-INT MAX-INT M* MIN-INT SM/REM ->  0 MAX-INT }T
+T{ MIN-INT MAX-INT M* MAX-INT SM/REM ->  0 MIN-INT }T
+T{ MAX-INT MAX-INT M* MAX-INT SM/REM ->  0 MAX-INT }T
+
 
 As the standard allows a system to provide either floored or symmetric division, the remaining operators have to be tested depending on the system behaviour. Two words are defined that provide a form of conditional compilation.
 

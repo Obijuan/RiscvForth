@@ -365,19 +365,20 @@ do_stod:
 #----------------------------------------------------
 .global do_smslashrem
 do_smslashrem: 
-    DOCOLON
+    DOCOLON  #--  -1 1 4
 
-    TWODUP
-    LXOR
-    TOR
-    OVER
-    TOR
+             #--  Gforth                 RiscvForth             =
+    TWODUP   #--  -1 1 4 1 4  R:         -1 1 4 1 4             si
+    LXOR     #--  -1 1 4 5    R:         -1 1 4 5               SI
+    TOR      #--  -1 1 4      R: 5       -1 1 4       R: 5
+    OVER     #--  -1 1 4 1    R: 5       -1 1 4 1     R: 5      SI
+    TOR      #--  -1 1 4      R: 5 1     -1 1 4       R: 5 1    SI
 
-    ABS
-    TOR
-    DABS
-    RFROM
-    UMSLASHMOD
+    ABS      #--  -1 1 4      R: 5 1     -1 1 4       R: 5 1    SI
+    TOR      #--  -1 1        R: 5 1 4   -1 1         R: 5 1 4  SI
+    DABS     #--  -1 1        R: 5 1 4   -1 1         R: 5 1 4  SI
+    RFROM    #--  -1 1 4      R: 5 1     -1 1 4       R: 5 1    SI
+    UMSLASHMOD #- 3 BIG       R: 5 1     -1 0                 ERROR!!!!
 
     SWOP
     RFROM
@@ -387,6 +388,11 @@ do_smslashrem:
     QNEGATE
 
     EXIT
+
+    # DW TWODUP,XOR,TOR,OVER,TOR
+    # DW ABS,TOR,DABS,RFROM,UMSLASHMOD
+    # DW SWOP,RFROM,QNEGATE,SWOP,RFROM,QNEGATE
+    # DW EXIT
 
 
 #----------------------------------------------------

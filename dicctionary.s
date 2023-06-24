@@ -914,12 +914,119 @@ link96:
     .align 2
     .word link96
     .byte 0
-lastword:
 link97:
     .byte 2
     .ascii "M*"
     .word do_mstar
 
+#-- Palabra 98
+    .align 2
+    .word link97
+    .byte 0
+link98:
+    .byte 6
+    .ascii "FM/MOD"
+    .word do_fmslashmod
+
+#-- Palabra 99
+    .align 2
+    .word link98
+    .byte 0
+link99:
+    .byte 6
+    .ascii "SM/REM"
+    .word do_smslashrem
+
+#-- Palabra 100
+    .align 2
+    .word link99
+    .byte 0
+link100:
+    .byte 6
+    .ascii "UM/MOD"
+    .word do_umslashmod
+
+#-- Palabra 101
+    .align 2
+    .word link100
+    .byte 0
+link101:
+    .byte 4
+    .ascii "DABS"
+    .word do_dabs
+
+#-- Palabra 102
+    .align 2
+    .word link101
+    .byte 0
+link102:
+    .byte 4
+    .ascii "HERE"
+    .word do_here
+
+#-- Palabra 103
+    .align 2
+    .word link102
+    .byte 0
+link103:
+    .byte 5
+    .ascii "CELL+"
+    .word do_cellplus
+
+#-- Palabra 104
+    .align 2
+    .word link103
+    .byte 0
+link104:
+    .byte 2
+    .ascii "2@"
+    .word do_twofetch
+
+#-- Palabra 105
+    .align 2
+    .word link104
+    .byte 0
+link105:
+    .byte 2
+    .ascii "2!"
+    .word do_twostore
+
+#-- Palabra 106
+    .align 2
+    .word link105
+    .byte 0
+link106:
+    .byte 2
+    .ascii "+!"
+    .word do_plusstore
+
+#-- Palabra 107
+    .align 2
+    .word link106
+    .byte 0
+link107:
+    .byte 5
+    .ascii "BEGIN"
+    .word do_begin
+
+#-- Palabra 108
+    .align 2
+    .word link107
+    .byte 1
+link108:
+    .byte 6
+    .ascii "REPEAT"
+    .word do_repeat
+
+#-- Palabra 109
+    .align 2
+    .word link108
+    .byte 1
+lastword:
+link109:
+    .byte 5
+    .ascii "WHILE"
+    .word do_while
 
 
 #-- Fin del diccionario
